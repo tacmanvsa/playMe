@@ -12,8 +12,7 @@ import UIKit
 struct Question {
     var question : String
     var answers : [String]
-    var answer : Int
-    var last : Bool
+    var answerIndex : [Int]
 }
 
 
@@ -26,6 +25,7 @@ class QuizViewController: UIViewController {
     var Questions = [Question]();
     var answers = [Int]();
     var questionIndex = 0;
+    var answerIndexCnt = 0;
     
     
     // Outlets
@@ -37,6 +37,7 @@ class QuizViewController: UIViewController {
     // Button actions
     @IBAction func firstOption(sender: AnyObject) {
         answers.append(0);
+        answerIndexCnt += Questions[questionIndex-1].answerIndex[0];
         
         if( questionIndex < Questions.count ) {
             updateQuestion();
@@ -50,6 +51,7 @@ class QuizViewController: UIViewController {
     
     @IBAction func secondOption(sender: AnyObject) {
         answers.append(1);
+        answerIndexCnt += Questions[questionIndex-1].answerIndex[2];
         
         if( questionIndex < Questions.count ) {
             updateQuestion();
@@ -64,6 +66,7 @@ class QuizViewController: UIViewController {
     
     @IBAction func thirdOption(sender: AnyObject) {
         answers.append(2);
+        answerIndexCnt += Questions[questionIndex-1].answerIndex[2];
         
         if( questionIndex < Questions.count ) {
             updateQuestion();
@@ -77,6 +80,7 @@ class QuizViewController: UIViewController {
     
     @IBAction func fourthOption(sender: AnyObject) {
         answers.append(3);
+        answerIndexCnt += Questions[questionIndex-1].answerIndex[3];
         
         if( questionIndex < Questions.count ) {
             updateQuestion();
@@ -89,6 +93,7 @@ class QuizViewController: UIViewController {
     
     // Next button
     @IBAction func nextView(sender: AnyObject) {
+        appModel.setQuizIndex(answerIndexCnt);
     }
 
     
@@ -99,9 +104,9 @@ class QuizViewController: UIViewController {
         nextButton.hidden = true;
         
         // 1 question
-        Questions.append(Question(question: "Ako sa mas?", answers: ["Dobre", "Zle", "Napicu", "Nechaj ma"], answer: 0, last: false));
+        Questions.append(Question(question: "How many hours did you slept?", answers: ["More then 8", "7-8", "6-7", "Less then 6"], answerIndex: [4, 3, 2, 1]));
         // 2 question
-        Questions.append(Question(question: "Sex?", answers: ["Ano", "Nie", "Lol", "Nechaj ma"], answer: 1, last: true));
+        Questions.append(Question(question: "Are you tired?", answers: ["No", "Little bit", "Yes", "Nechaj ma"], answerIndex:  [4, 3, 2, 1]));
         
         updateQuestion();
         // Do any additional setup after loading the view.
@@ -115,8 +120,6 @@ class QuizViewController: UIViewController {
     
     // function for picking a question and updating the view
     func updateQuestion() {
-        
-        print(Questions[0]);
         quizLabel.text = Questions[questionIndex].question;
         
         for i in 0 ..< buttons.count {

@@ -28,6 +28,7 @@ class AppModel {
     }
     
     internal func setQuizIndex(avg : Int) {
+        print("setQuiz", avg);
         AppModel.quizIndex = avg;
     }
     
