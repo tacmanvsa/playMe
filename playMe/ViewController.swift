@@ -121,14 +121,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBAction func playAndPauseMusic(sender: AnyObject) {
         
-        var appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
-        var context:NSManagedObjectContext = appDelegate.managedObjectContext;
+        let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
+        let context:NSManagedObjectContext = appDelegate.managedObjectContext;
         
-        var request = NSFetchRequest(entityName: "Songs");
+        let request = NSFetchRequest(entityName: "Songs");
         request.returnsObjectsAsFaults = false;
         
         do {
-            var results:NSArray = try context.executeFetchRequest(request);
+            let results:NSArray = try context.executeFetchRequest(request);
             if(results.count > 0) {
                 for res in results {
                     print(res);
@@ -144,14 +144,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             
             getInformation();
             
-            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: "playAndPauseMusic:");
+            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
             
             toolbar.items![1] = playButton; //apply for first toolbar item
         } else {
             ViewController.player!.delegate = self;
             ViewController.player!.play();
             
-            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: "playAndPauseMusic:");
+            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
             
             toolbar.items![1] = playButton; //apply for first toolbar item
 
@@ -203,7 +203,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         navigationTitle.title = BLEHandler.choosenDevice as? String;
         bleHandler?.connectToPeripheral();
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "computeAvgBpm:", name: "bpm", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.computeAvgBpm(_:)), name: "bpm", object: nil);
         
         if((ViewController.player?.playing) != nil) {
             print("YES ITS PLAYING");
@@ -233,10 +233,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 
                     ViewController.songsUrl.append(MusicSongs(songUrl: itemArr[0], songType: itemArr[1]/*, songBpm: detector.getBPM(path)*/));
                     
-                    var appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
-                    var context:NSManagedObjectContext = appDelegate.managedObjectContext;
+                    let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
+                    let context:NSManagedObjectContext = appDelegate.managedObjectContext;
                     
-                    var newSong = NSEntityDescription.insertNewObjectForEntityForName("Songs", inManagedObjectContext: context) as NSManagedObject;
+                    let newSong = NSEntityDescription.insertNewObjectForEntityForName("Songs", inManagedObjectContext: context) as NSManagedObject;
                     
                     newSong.setValue(itemArr[0], forKey: "song_name");
                     newSong.setValue(itemArr[1], forKey: "song_type");

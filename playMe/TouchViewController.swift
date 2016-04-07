@@ -84,7 +84,7 @@ class TouchViewController: UIViewController {
                         NSTimer.scheduledTimerWithTimeInterval(
                             0.02,
                             target: self,
-                            selector: "displayTime:",
+                            selector: #selector(TouchViewController.displayTime(_:)),
                             userInfo: nil,
                             repeats: true);
                     }
