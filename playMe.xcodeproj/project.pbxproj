@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		504B31E71CB6D30500CAD209 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B31E61CB6D30500CAD209 /* AppModel.swift */; };
 		507013881CA53DD60037B8D4 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 507013871CA53DD60037B8D4 /* BPMDetector.mm */; };
 		5070138C1CA59DC30037B8D4 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = 5070138B1CA59DC30037B8D4 /* Music */; };
 		5070138E1CA5A3410037B8D4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070138D1CA5A3410037B8D4 /* IntroViewController.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		4F1588D8D1DBFB1C75D2721E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		504B31E61CB6D30500CAD209 /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../AppModel.swift; sourceTree = "<group>"; };
 		507013861CA53DD60037B8D4 /* BPMDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMDetector.h; sourceTree = "<group>"; };
 		507013871CA53DD60037B8D4 /* BPMDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BPMDetector.mm; sourceTree = "<group>"; };
 		5070138B1CA59DC30037B8D4 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Music; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				50E0C4C61CA3ECC500B9B04D /* Superpowered */,
 				50E0C4BA1CA3ECC500B9B04D /* SqLite */,
 				50E0C4A11CA3ECC500B9B04D /* AppDelegate.swift */,
+				504B31E61CB6D30500CAD209 /* AppModel.swift */,
 				508E80671CAA8BD20080BA6D /* Playme.xcdatamodeld */,
 				5070138D1CA5A3410037B8D4 /* IntroViewController.swift */,
 				50E0C4CF1CA3ECC500B9B04D /* TouchViewController.swift */,
@@ -474,6 +477,7 @@
 				50E0C4E71CA3ECC500B9B04D /* QuizViewController.swift in Sources */,
 				50E0C4E61CA3ECC500B9B04D /* MusicSongs.swift in Sources */,
 				50E0C4EC1CA3ECC500B9B04D /* FMResultSet.m in Sources */,
+				504B31E71CB6D30500CAD209 /* AppModel.swift in Sources */,
 				50E0C4D31CA3ECC500B9B04D /* AudioPlayer.swift in Sources */,
 				50E0C4F11CA3ECC500B9B04D /* ViewController.swift in Sources */,
 				50E0C4E91CA3ECC500B9B04D /* FMDatabaseAdditions.m in Sources */,

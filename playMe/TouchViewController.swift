@@ -25,6 +25,9 @@ extension UIColor {
 class TouchViewController: UIViewController {
     
 
+    // Data model class
+    var appModel : AppModel = AppModel();
+    
     // Variables
     var time : NSTimeInterval = 0; // actual time for reaction
     var timeArray: [NSTimeInterval] = []; // array of reaction times
@@ -32,19 +35,25 @@ class TouchViewController: UIViewController {
     var prepared : Bool = false; // control headings and background color
     var loopCnt : Int = 0; // counting the number of loops
     var waitingForGreen : Bool = false; // Check if the user touched the screen before green screen
-    var penalty : Int = 0;
-    
+    var triesStr = String("Tries | 0 of 5");
+    var avgStr = String("Average | 0ms");
+    var sum : Double = 0;
+    var avg : Double = 0;
     
     // Outlets
     @IBOutlet var timerLabel: UILabel!
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var nextButton: UIButton!
     @IBOutlet var logoLabel: UILabel!
+    @IBOutlet var avgLabel: UILabel!
+    @IBOutlet var triesLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad();
         nextButton.hidden = true;
+        avgLabel.text = avgStr;
+        triesLabel.text = triesStr;
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,22 +61,17 @@ class TouchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // function returning random number between 2 and 6
-    func grabRandomTime() -> Int{
-        let time = Int(arc4random_uniform(UInt32(6)+2));
-        return time;
-    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.prepared = !self.prepared;
         self.view.backgroundColor = UIColor(red: 206, green: 38, blue: 54);
         
-        if(loopCnt <= 5) {
+        if(loopCnt < 5) {
             
             if(self.prepared) {
                 loopCnt += 1;
-                self.time = 0.6; // if the user hits the button before green, then penalization in form of
-                                 // time
+                self.time = 0; // if the user hits the button before green, then set timer to null of
+                               // and don't count it to average 
                 waitingForGreen = true;
 //                self.logoLabel.font = UIFont.fontAwesomeOfSize(200);
 //                self.logoLabel.text = String.fontAwesomeIconWithCode("fa-clock-o");
@@ -77,8 +81,6 @@ class TouchViewController: UIViewController {
                 // It's something like sleep, but its not on the main thread
                 let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(grabRandomTime()) * Int64(NSEC_PER_SEC))
                     dispatch_after(time, dispatch_get_main_queue()) {
-                        self.view.backgroundColor = UIColor.redColor();
-                        
                         self.startTime = NSDate.timeIntervalSinceReferenceDate();
                 
                         NSTimer.scheduledTimerWithTimeInterval(
@@ -90,29 +92,49 @@ class TouchViewController: UIViewController {
                     }
             } else {
                 waitingForGreen = false;
-                self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
+                
+                if(self.time * 1000 == 0) {
+                    self.timerLabel.numberOfLines = 0;
+                    self.timerLabel.text = "UPS! Too fast!";
+                } else {
+                    self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
+                }
+                
                 self.view.backgroundColor = UIColor(red: 43, green: 135, blue: 209);
                 self.headerLabel.text = "Touch to begin again!";
                 timeArray.append(self.time); // append the time to array
                 self.time = 0; // zero for the next loop
                 self.startTime = 0; // zero for the next loop
+                
+                // set the Avg
+                avgStr = "Average | " + countAverage();
+                avgLabel.text = avgStr;
+                
+                // set the Tries
+                triesStr = "Tries | " + String(loopCnt) + " of 5";
+                triesLabel.text = triesStr;
+                
             }
             
-        } else { // after 5 tests, we count the average and we go to the next view
-            var sum : Double = 0;
-            for i in 0..<timeArray.count {
-                print("casy: ", timeArray[i]);
-                sum += timeArray[i];
-            }
-            print("avg", sum/Double(timeArray.count));
-            print("penalty", penalty);
-
+        } else { // after 5 tests, we can go to the next view
+            
+            triesStr = "Tries | 5 of 5";
+            triesLabel.text = triesStr;
+            self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
+            
+            
+            appModel.setAvgRt(Int(avg));
             nextButton.hidden = false;
         }
         
         
     }
     
+    // function returning random number between 2 and 6
+    func grabRandomTime() -> Int{
+        let time = Int(arc4random_uniform(UInt32(6)+2));
+        return time;
+    }
     
     // function for displaying time
     func displayTime(timer: NSTimer) {
@@ -127,6 +149,19 @@ class TouchViewController: UIViewController {
             self.time = NSDate.timeIntervalSinceReferenceDate() - startTime;
         }
         
+    }
+    
+    // function for average counting
+    func countAverage() -> String {
+        if(timeArray.last != 0.0) {
+            sum += timeArray.last!;
+            
+            avg = (sum/Double(loopCnt))*1000;
+            return NSString(format: "%1.0fms", avg) as String;
+        } else {
+            loopCnt -= 1;
+            return NSString(format: "%1.0fms", avg) as String;
+        }
     }
 
 }

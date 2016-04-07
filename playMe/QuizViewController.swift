@@ -19,6 +19,9 @@ struct Question {
 
 class QuizViewController: UIViewController {
     
+    // Data model
+    var appModel : AppModel = AppModel();
+    
     // Questions
     var Questions = [Question]();
     var answers = [Int]();
@@ -91,8 +94,7 @@ class QuizViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad();
         // not visible nxt button
         nextButton.hidden = true;
         
