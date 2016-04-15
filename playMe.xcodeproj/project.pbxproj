@@ -12,8 +12,8 @@
 		5070138C1CA59DC30037B8D4 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = 5070138B1CA59DC30037B8D4 /* Music */; };
 		5070138E1CA5A3410037B8D4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070138D1CA5A3410037B8D4 /* IntroViewController.swift */; };
 		508E80661CAA816E0080BA6D /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 508E80651CAA816D0080BA6D /* libsqlite3.0.tbd */; };
-		508E80691CAA8BD20080BA6D /* Playme.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 508E80671CAA8BD20080BA6D /* Playme.xcdatamodeld */; };
 		50A4B5B61C2F3072002E5002 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A4B5B51C2F3072002E5002 /* AVFoundation.framework */; };
+		50B903B01CC1520E005336A5 /* Playme.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50B903AE1CC1520E005336A5 /* Playme.xcdatamodeld */; };
 		50D760781C70A6820020C83A /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D760771C70A6820020C83A /* libSuperpoweredAudioIOS.a */; };
 		50D760851C70AE010020C83A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D760841C70AE010020C83A /* AudioToolbox.framework */; };
 		50D760871C70AE190020C83A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D760861C70AE190020C83A /* CoreMedia.framework */; };
@@ -59,15 +59,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4F1588D8D1DBFB1C75D2721E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		504B31E61CB6D30500CAD209 /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../AppModel.swift; sourceTree = "<group>"; };
 		507013861CA53DD60037B8D4 /* BPMDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMDetector.h; sourceTree = "<group>"; };
 		507013871CA53DD60037B8D4 /* BPMDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BPMDetector.mm; sourceTree = "<group>"; };
 		5070138B1CA59DC30037B8D4 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Music; sourceTree = "<group>"; };
 		5070138D1CA5A3410037B8D4 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		508E80651CAA816D0080BA6D /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		508E80681CAA8BD20080BA6D /* Playme.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Playme.xcdatamodel; sourceTree = "<group>"; };
 		50A4B5B51C2F3072002E5002 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		50B903AF1CC1520E005336A5 /* Playme.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Playme.xcdatamodel; sourceTree = "<group>"; };
 		50D760771C70A6820020C83A /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
 		50D760841C70AE010020C83A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		50D760861C70AE190020C83A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -112,8 +111,6 @@
 		50FEDFED1C00AAA300761129 /* playMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = playMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FEDFF11C00AAA300761129 /* playMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = playMeUITests.swift; sourceTree = "<group>"; };
 		50FEDFF31C00AAA300761129 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD34D3F99E877308D2FBEED5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		D3404E6501B0E3F27B7CAC89 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,14 +145,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08178FB3F76A0F04FBEF21CA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D3404E6501B0E3F27B7CAC89 /* Pods.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		50E0C4A01CA3ECC500B9B04D /* playMe */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,8 +152,8 @@
 				50E0C4C61CA3ECC500B9B04D /* Superpowered */,
 				50E0C4BA1CA3ECC500B9B04D /* SqLite */,
 				50E0C4A11CA3ECC500B9B04D /* AppDelegate.swift */,
+				50B903AE1CC1520E005336A5 /* Playme.xcdatamodeld */,
 				504B31E61CB6D30500CAD209 /* AppModel.swift */,
-				508E80671CAA8BD20080BA6D /* Playme.xcdatamodeld */,
 				5070138D1CA5A3410037B8D4 /* IntroViewController.swift */,
 				50E0C4CF1CA3ECC500B9B04D /* TouchViewController.swift */,
 				50E0C4B91CA3ECC500B9B04D /* QuizViewController.swift */,
@@ -230,8 +219,6 @@
 				50FEDFE51C00AAA300761129 /* playMeTests */,
 				50FEDFF01C00AAA300761129 /* playMeUITests */,
 				50FEDFCF1C00AAA200761129 /* Products */,
-				E51624F7D2756DD32380F59F /* Pods */,
-				08178FB3F76A0F04FBEF21CA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -263,15 +250,6 @@
 			path = playMeUITests;
 			sourceTree = "<group>";
 		};
-		E51624F7D2756DD32380F59F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BD34D3F99E877308D2FBEED5 /* Pods.debug.xcconfig */,
-				4F1588D8D1DBFB1C75D2721E /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -279,12 +257,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50FEDFF61C00AAA300761129 /* Build configuration list for PBXNativeTarget "playMe" */;
 			buildPhases = (
-				EA00AFC4389E051F3BCDB4DE /* Check Pods Manifest.lock */,
 				50FEDFCA1C00AAA200761129 /* Sources */,
 				50FEDFCB1C00AAA200761129 /* Frameworks */,
 				50FEDFCC1C00AAA200761129 /* Resources */,
-				E040AA64BC7378E76BAE66C2 /* Embed Pods Frameworks */,
-				A0A133AE62505C2CFB66C9A0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -411,66 +386,18 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		A0A133AE62505C2CFB66C9A0 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E040AA64BC7378E76BAE66C2 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EA00AFC4389E051F3BCDB4DE /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		50FEDFCA1C00AAA200761129 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				50E0C4EF1CA3ECC500B9B04D /* TableViewController.swift in Sources */,
+				50B903B01CC1520E005336A5 /* Playme.xcdatamodeld in Sources */,
 				50E0C4D11CA3ECC500B9B04D /* AppDelegate.swift in Sources */,
 				50E0C4D41CA3ECC500B9B04D /* BLEHandler.swift in Sources */,
 				50E0C4F01CA3ECC500B9B04D /* TouchViewController.swift in Sources */,
 				50E0C4D51CA3ECC500B9B04D /* CustomCell.swift in Sources */,
 				507013881CA53DD60037B8D4 /* BPMDetector.mm in Sources */,
-				508E80691CAA8BD20080BA6D /* Playme.xcdatamodeld in Sources */,
 				50E0C4E81CA3ECC500B9B04D /* FMDatabase.m in Sources */,
 				50E0C4EA1CA3ECC500B9B04D /* FMDatabasePool.m in Sources */,
 				50E0C4EB1CA3ECC500B9B04D /* FMDatabaseQueue.m in Sources */,
@@ -604,7 +531,6 @@
 		};
 		50FEDFF71C00AAA300761129 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD34D3F99E877308D2FBEED5 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -627,7 +553,6 @@
 		};
 		50FEDFF81C00AAA300761129 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F1588D8D1DBFB1C75D2721E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -738,12 +663,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		508E80671CAA8BD20080BA6D /* Playme.xcdatamodeld */ = {
+		50B903AE1CC1520E005336A5 /* Playme.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				508E80681CAA8BD20080BA6D /* Playme.xcdatamodel */,
+				50B903AF1CC1520E005336A5 /* Playme.xcdatamodel */,
 			);
-			currentVersion = 508E80681CAA8BD20080BA6D /* Playme.xcdatamodel */;
+			currentVersion = 50B903AF1CC1520E005336A5 /* Playme.xcdatamodel */;
 			path = Playme.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

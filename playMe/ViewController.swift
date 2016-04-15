@@ -19,6 +19,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     private static var player : AVAudioPlayer?;
     private static var songsUrl = [MusicSongs]();
     
+    private static let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
+    private static let context:NSManagedObjectContext = ViewController.appDelegate.managedObjectContext;
+    
+    // BPM counter
+    private static let detector : BPMDetector = BPMDetector.init();
+    
     var avgPulseMin = [Int]();
     var pulse = [Int]();
     
@@ -120,20 +126,18 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     
     @IBAction func playAndPauseMusic(sender: AnyObject) {
-        
-        var appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
-        var context:NSManagedObjectContext = appDelegate.managedObjectContext;
-        
-        var request = NSFetchRequest(entityName: "Songs");
+        let request = NSFetchRequest(entityName: "Songs");
         request.returnsObjectsAsFaults = false;
         
         do {
-            var results:NSArray = try context.executeFetchRequest(request);
+            let results:NSArray = try ViewController.context.executeFetchRequest(request);
             if(results.count > 0) {
+                print("kolko", results.count);
                 for res in results {
                     print(res);
                 }
             }
+            
         } catch {
             print("RESULT ERROR");
         }
@@ -144,14 +148,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             
             getInformation();
             
-            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: "playAndPauseMusic:");
+            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
             
             toolbar.items![1] = playButton; //apply for first toolbar item
         } else {
             ViewController.player!.delegate = self;
             ViewController.player!.play();
             
-            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: "playAndPauseMusic:");
+            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
             
             toolbar.items![1] = playButton; //apply for first toolbar item
 
@@ -197,9 +201,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     // The view loads
     override func viewDidLoad() {
         // Initializing the centralManager
+
         
         super.viewDidLoad();
-        bleHandler = BLEHandler();
+//        bleHandler = BLEHandler();
         
         navigationTitle.title = BLEHandler.choosenDevice as? String;
         bleHandler?.connectToPeripheral();
@@ -212,9 +217,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         
         
-        // get Notifications
-
-        let detector : BPMDetector = BPMDetector.init();
+            // get Notifications
+//            let detector : BPMDetector = BPMDetector.init();
             var avItems = [AVPlayerItem]();
         
             let resourcePath : NSString = NSBundle.mainBundle().resourcePath!
@@ -231,25 +235,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 
                     avItems.append(AVPlayerItem.init(URL: path));
                 
-                    ViewController.songsUrl.append(MusicSongs(songUrl: itemArr[0], songType: itemArr[1]/*, songBpm: detector.getBPM(path)*/));
-                    
-                    var appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
-                    var context:NSManagedObjectContext = appDelegate.managedObjectContext;
-                    
-                    var newSong = NSEntityDescription.insertNewObjectForEntityForName("Songs", inManagedObjectContext: context) as NSManagedObject;
-                    
-                    newSong.setValue(itemArr[0], forKey: "song_name");
-                    newSong.setValue(itemArr[1], forKey: "song_type");
-                    newSong.setValue(detector.getBPM(path), forKey: "bpm");
-                    
-                    do {
-                        try context.save();
-                    } catch {
-                        print("Error in saving");
-                    }
-                    
-                    print(newSong);
-                    print("Object saved");
+                    ViewController.songsUrl.append(MusicSongs(songUrl: itemArr[0], songType: itemArr[1]));
+
+                    insertSongIfNotExists(itemArr[0], path: path);
                 }
             } catch {
                 // failed to read directory – bad permissions, perhaps?
@@ -265,6 +253,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             }
         
         }
+//        deleteSongs();
         super.viewDidLoad()
     }
     
@@ -351,6 +340,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         let currentSongTitle = AVMetadataItem.metadataItemsFromArray(metadata, filteredByIdentifier: AVMetadataCommonIdentifierTitle);
         let currentSongArtist = AVMetadataItem.metadataItemsFromArray(metadata, filteredByIdentifier: AVMetadataCommonIdentifierArtist);
         
+//        print("\(currentSongArtist): \(currentSongTitle)");
+        
         return "\(currentSongArtist): \(currentSongTitle)";
     }
     
@@ -365,5 +356,50 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         fastForwardMusic(UIBarButtonItem);
     }
 
+    
+    /*
+                *** CORE DATA FUNKCTIONS ***
+    */
+    
+    func deleteSongs() {
+        let coord = ViewController.appDelegate.persistentStoreCoordinator;
+        
+        let fetchRequest = NSFetchRequest(entityName: "Songs");
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest);
+        
+        do {
+            try coord.executeRequest(deleteRequest, withContext: ViewController.context);
+        } catch let error as NSError {
+            debugPrint(error);
+        }
+    }
+    
+    // IDENTIFIKUJE NOVEHO, TREBA HO UZ LEN PRIDAT A VYRATAT BPM
+    func insertSongIfNotExists(songName : String, path : NSURL) {
+        var newSong : Bool = true;
+        
+        let request = NSFetchRequest(entityName: "Songs");
+        request.returnsObjectsAsFaults = false;
+        
+        do {
+            let results:NSArray = try ViewController.context.executeFetchRequest(request);
+            if(results.count > 0) {
+                print("kolko", results.count);
+                for res in results {
+                    if( songName == res.valueForKey("song_name") as! String ) {
+                        newSong = false;
+                    }
+                }
+            }
+            
+        } catch {
+            print("RESULT ERROR");
+        }
+        
+        if(newSong) {
+            print("ano nerovnaju sa", songName);
+        }
+    }
+    
 }
 
