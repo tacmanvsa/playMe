@@ -13,11 +13,27 @@ class MusicSongs {
     var songUrl: String = "";
     var songType: String = "";
     var songBpm: Float = 0;
+    var category: String?
     
-    init(songUrl : String, songType : String/*, songBpm : Float*/) {
+    init(songUrl : String, songType : String, songBpm : Float) {
         self.songUrl = songUrl;
         self.songType = songType;
-//        self.songBpm = songBpm;
-//        print("songBpm", songBpm);
+        self.songBpm = songBpm;
+        self.category = addCategory(self.songBpm);
+        
+        print("songBpm", songBpm);
+        print("category", self.category);
     }
+    
+    func addCategory(bpm : Float) -> String {
+    
+        if(bpm < 95) {
+            return "Low";
+        } else if(bpm >= 95 && bpm < 130) {
+            return "Mid";
+        } else {
+            return "High";
+        }
+    }
+    
 }

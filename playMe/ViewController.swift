@@ -204,11 +204,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 
         
         super.viewDidLoad();
-//        bleHandler = BLEHandler();
+
+        bleHandler = BLEHandler();
         
         navigationTitle.title = BLEHandler.choosenDevice as? String;
         bleHandler?.connectToPeripheral();
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "computeAvgBpm:", name: "bpm", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.computeAvgBpm(_:)), name: "bpm", object: nil);
         
         if((ViewController.player?.playing) != nil) {
             print("YES ITS PLAYING");
@@ -235,7 +236,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 
                     avItems.append(AVPlayerItem.init(URL: path));
                 
-                    ViewController.songsUrl.append(MusicSongs(songUrl: itemArr[0], songType: itemArr[1]));
+//                    ViewController.songsUrl.append(MusicSongs(songUrl: itemArr[0], songType: itemArr[1]));
 
                     insertSongIfNotExists(itemArr[0], path: path);
                 }
@@ -383,11 +384,15 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         do {
             let results:NSArray = try ViewController.context.executeFetchRequest(request);
+            print("kolko", results.count);
             if(results.count > 0) {
-                print("kolko", results.count);
                 for res in results {
                     if( songName == res.valueForKey("song_name") as! String ) {
                         newSong = false;
+                        print("push this song", songName, res.valueForKey("bpm") as! Float);
+                        ViewController.songsUrl.append(MusicSongs(songUrl: songName, songType: "mp3", songBpm: res.valueForKey("bpm") as! Float));
+                        
+                        break;
                     }
                 }
             }

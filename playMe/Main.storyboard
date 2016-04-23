@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0Ff-Hg-7Im">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="app-zu-DxD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -124,7 +124,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="69" id="cZi-Ap-5oo" customClass="CustomCell" customModule="playMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="320" height="69"/>
+                                <rect key="frame" x="0.0" y="28" width="320" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cZi-Ap-5oo" id="Ydx-Sw-rjK">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="68.5"/>
@@ -260,7 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cE-ul-Fbj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="548" y="-315"/>
+            <point key="canvasLocation" x="524" y="-247"/>
         </scene>
         <!--Intro View Controller-->
         <scene sceneID="BLV-3o-xlX">
@@ -350,7 +350,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmn-zb-7ms" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="34" y="-315"/>
+            <point key="canvasLocation" x="28" y="-247"/>
         </scene>
         <!--Quiz View Controller-->
         <scene sceneID="qWD-Sy-daA">
@@ -482,10 +482,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nCc-vB-TdB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="611" y="418"/>
+            <point key="canvasLocation" x="691" y="473"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JhS-bV-Ceg"/>
+        <segue reference="nzq-0J-3GE"/>
     </inferredMetricsTieBreakers>
 </document>
