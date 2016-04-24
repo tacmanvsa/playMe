@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MusicSongs {
     var songUrl: String = "";
     var songType: String = "";

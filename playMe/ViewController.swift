@@ -16,8 +16,12 @@ import CoreData
 
 class ViewController: UIViewController, AVAudioPlayerDelegate {
     
+    private static var state : Int?;
     private static var player : AVAudioPlayer?;
     private static var songsUrl = [MusicSongs]();
+//    private static var songsUrlLow = [MusicSongs]();
+//    private static var songsUrlMid = [MusicSongs]();
+//    private static var songsUrlHigh = [MusicSongs]();
     
     private static let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
     private static let context:NSManagedObjectContext = ViewController.appDelegate.managedObjectContext;
@@ -27,23 +31,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     var avgPulseMin = [Int]();
     var pulse = [Int]();
-    
+    var firstAvg : Bool = true;
     
     var bleHandler : BLEHandler?;
-    
-    /*
-    
-    *** Media collections ***
-    
-    */
-    
-    var mediaCollection1 = [];
-    var mediaCollection2 = [];
-    var mediaCollection3 = [];
-    
-    
-    var mediaItems : [MPMediaItem] = MPMediaQuery.songsQuery().items!;
-    var mediaCollection : MPMediaItemCollection?
     
     var index = 0;
     
@@ -201,7 +191,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     // The view loads
     override func viewDidLoad() {
         // Initializing the centralManager
-
+        
+        firstAvg = true;
         
         super.viewDidLoad();
 
@@ -236,8 +227,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 
                     avItems.append(AVPlayerItem.init(URL: path));
                 
-//                    ViewController.songsUrl.append(MusicSongs(songUrl: itemArr[0], songType: itemArr[1]));
-
                     insertSongIfNotExists(itemArr[0], path: path);
                 }
             } catch {
@@ -249,6 +238,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 try ViewController.player = AVAudioPlayer(contentsOfURL: returnUrlOfActualItem(index));
                 ViewController.player!.delegate = self;
                 ViewController.player!.play();
+                print("preco nehra tento kokot?",ViewController.player?.playing );
             } catch {
                 print("Audio player nefunguje");
             }
@@ -280,19 +270,29 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             heartRateLabel.text = "\(strBpm)";
         }
         
-        if(pulse.count  >= 60) {
-            let pulseArray = pulse;
-            pulse.removeAll();
-            calcAvgPulse(pulseArray);
+        if(firstAvg) {
+            if(pulse.count  >= 5) {
+                let pulseArray = pulse;
+                pulse.removeAll();
+                calcAvgPulse(pulseArray);
+                firstAvg = false;
+            }
+        } else {
+            if(pulse.count  >= 360) {
+                let pulseArray = pulse;
+                pulse.removeAll();
+                calcAvgPulse(pulseArray);
+            }
         }
         
         pulse.append(bpm!);
         
-        print("notification", bpm);
+        print("pulse count", pulse.count);
+//        print("notification", bpm);
     }
     
     
-    // calculate avg bpm from 1 minute bpm datas
+    // calculate avg bpm from 4 minute bpm datas
     func calcAvgPulse(pulseArray : [Int]) {
         var sum = 0;
         for i in 0 ..< pulseArray.count {
@@ -300,7 +300,21 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }
         print("sum ", sum);
         print("avg ", sum/pulseArray.count);
-        avgPulseMin.append(sum/pulseArray.count);
+//        avgPulseMin.append(sum/pulseArray.count);
+        let avg : Int = sum/pulseArray.count
+        
+        if(avg < 60) {
+            ViewController.state = 0;
+        } else if(avg >= 60 && avg < 90) {
+            ViewController.state = 1;
+        } else if(avg >= 90 && avg < 130) {
+            ViewController.state = 2;
+        } else if(avg >= 130) {
+            ViewController.state = 0;
+        }
+        
+        print( "\n AVG : ", avg);
+        print( "\n VIEWCONTROLLER STATE : ", ViewController.state, "\n" );
     }
     
     
