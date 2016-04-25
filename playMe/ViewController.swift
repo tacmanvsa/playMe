@@ -18,10 +18,11 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     private static var state : Int?;
     private static var player : AVAudioPlayer?;
-    private static var songsUrl = [MusicSongs]();
-//    private static var songsUrlLow = [MusicSongs]();
-//    private static var songsUrlMid = [MusicSongs]();
-//    private static var songsUrlHigh = [MusicSongs]();
+    //    private static var songsUrl = [MusicSongs]();
+    private static var songsUrlELow = [MusicSongs]();
+    private static var songsUrlLow = [MusicSongs]();
+    private static var songsUrlMid = [MusicSongs]();
+    private static var songsUrlHigh = [MusicSongs]();
     
     private static let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
     private static let context:NSManagedObjectContext = ViewController.appDelegate.managedObjectContext;
@@ -87,31 +88,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     
     @IBAction func rewindMusic(sender: AnyObject) {
-        print("index \(index)");
-        if( index == 0 ) { index = ViewController.songsUrl.count - 1; }
-        else { index -= 1; }
         
-        do {
-            try ViewController.player = AVAudioPlayer.init(contentsOfURL: returnUrlOfActualItem(index));
-            ViewController.player!.delegate = self;
-            ViewController.player!.play();
-        } catch {
-            print("rewindMusic error");
-        }
+        playMusicByIndex("back");
     }
     
     
     @IBAction func fastForwardMusic(sender: AnyObject) {
-        if( index == ViewController.songsUrl.count - 1 ) { index = 0; }
-        else { index += 1; }
         
-        do {
-            try ViewController.player = AVAudioPlayer.init(contentsOfURL: returnUrlOfActualItem(index));
-            ViewController.player!.delegate = self;
-            ViewController.player!.play();
-        } catch {
-            print("rewindMusic error");
-        }
+        playMusicByIndex("forward");
     }
     
     
@@ -210,7 +194,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         
             // get Notifications
-//            let detector : BPMDetector = BPMDetector.init();
+            let detector : BPMDetector = BPMDetector.init();
             var avItems = [AVPlayerItem]();
         
             let resourcePath : NSString = NSBundle.mainBundle().resourcePath!
@@ -226,21 +210,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                     let path : NSURL = NSBundle.mainBundle().URLForResource("Music/\(itemArr[0])", withExtension: itemArr[1])!;
                 
                     avItems.append(AVPlayerItem.init(URL: path));
-                
+                    
+//                    print("\(itemArr[0]) : ", detector.getBPM(path));
+                    
                     insertSongIfNotExists(itemArr[0], path: path);
                 }
             } catch {
                 // failed to read directory – bad permissions, perhaps?
-            }
-        
-        
-            do {
-                try ViewController.player = AVAudioPlayer(contentsOfURL: returnUrlOfActualItem(index));
-                ViewController.player!.delegate = self;
-                ViewController.player!.play();
-                print("preco nehra tento kokot?",ViewController.player?.playing );
-            } catch {
-                print("Audio player nefunguje");
             }
         
         }
@@ -261,6 +237,43 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     */
     
+    // play Music with actual index
+    func playMusicByIndex(type : String) {
+        if(type == "forward") {
+            if( index == returnSongsArrayCount(ViewController.state!) - 1 ) { index = 0; }
+            else { index += 1; }
+        } else if(type == "back") {
+            if( index == 0 ) { index = returnSongsArrayCount(ViewController.state!) - 1; }
+            else { index -= 1; }
+        }
+        
+        
+        do {
+            try ViewController.player = AVAudioPlayer(contentsOfURL: returnUrlOfActualItem(index));
+            ViewController.player!.delegate = self;
+            ViewController.player!.play();
+            ViewController.player?.peakPowerForChannel(<#T##channelNumber: Int##Int#>)
+        } catch {
+            print("Audio player nefunguje");
+        }
+    }
+    
+    // return the count of song array - input: type
+    func returnSongsArrayCount(type : Int) -> Int {
+        switch(type) {
+        case 0:
+            return ViewController.songsUrlELow.count;
+        case 1:
+            return ViewController.songsUrlLow.count;
+        case 2:
+            return ViewController.songsUrlMid.count;
+        case 3:
+            return ViewController.songsUrlHigh.count;
+        default:
+            return 0;
+        }
+    }
+    
     // Notifications of current bpm
     func computeAvgBpm(notifications: NSNotification) {
         let userInfo:Dictionary<String,Int!> = notifications.userInfo as! Dictionary<String,Int!>;
@@ -278,7 +291,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 firstAvg = false;
             }
         } else {
-            if(pulse.count  >= 360) {
+            if(pulse.count  >= 60) {
                 let pulseArray = pulse;
                 pulse.removeAll();
                 calcAvgPulse(pulseArray);
@@ -287,12 +300,16 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         pulse.append(bpm!);
         
-        print("pulse count", pulse.count);
+//        print("pulse count", pulse.count);
 //        print("notification", bpm);
     }
     
     
     // calculate avg bpm from 4 minute bpm datas
+    // ViewController state: 0 -> 0 - 59
+    //                       1 -> 60 - 89
+    //                       2 -> 90 - 129
+    //                       3 -> 130 -
     func calcAvgPulse(pulseArray : [Int]) {
         var sum = 0;
         for i in 0 ..< pulseArray.count {
@@ -310,11 +327,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         } else if(avg >= 90 && avg < 130) {
             ViewController.state = 2;
         } else if(avg >= 130) {
-            ViewController.state = 0;
+            ViewController.state = 3;
         }
         
         print( "\n AVG : ", avg);
         print( "\n VIEWCONTROLLER STATE : ", ViewController.state, "\n" );
+        
+        if(firstAvg) { playMusicByIndex("") };
     }
     
     
@@ -341,9 +360,29 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     // Returns the url of actual played song
     func returnUrlOfActualItem(index: Int) -> NSURL {
-        let url : NSURL = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrl[index].songUrl)", withExtension: ViewController.songsUrl[index].songType)!;
-        print(url);
-        return url;
+        var url : NSURL?;
+        
+        switch(ViewController.state!) {
+        case 0:
+            url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlELow[index].songUrl)", withExtension: ViewController.songsUrlELow[index].songType)!;
+            break;
+        case 1:
+            url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlLow[index].songUrl)", withExtension: ViewController.songsUrlLow[index].songType)!;
+            break;
+        case 2:
+            url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlMid[index].songUrl)", withExtension: ViewController.songsUrlMid[index].songType)!;
+            break;
+        case 3:
+            url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlHigh[index].songUrl)", withExtension: ViewController.songsUrlHigh[index].songType)!;
+            break;
+        default:
+            url = NSBundle.mainBundle().URLForResource("Music/AdeleChasingPavements", withExtension: "mp3")!;
+            break;
+
+        }
+        
+//        print(url);
+        return url!;
     }
     
     
@@ -403,8 +442,30 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 for res in results {
                     if( songName == res.valueForKey("song_name") as! String ) {
                         newSong = false;
-                        print("push this song", songName, res.valueForKey("bpm") as! Float);
-                        ViewController.songsUrl.append(MusicSongs(songUrl: songName, songType: "mp3", songBpm: res.valueForKey("bpm") as! Float));
+                        
+                        var song : MusicSongs = MusicSongs(songUrl: songName, songType: "mp3", songBpm: res.valueForKey("bpm") as! Float);
+                        
+                        switch(song.category!) {
+                            case "ELow" :
+                                ViewController.songsUrlELow.append(song);
+                                print("push this song EL", songName, res.valueForKey("bpm") as! Float);
+                                break;
+                            case "Low" :
+                                ViewController.songsUrlLow.append(song);
+                                print("push this song L", songName, res.valueForKey("bpm") as! Float);
+                                break;
+                            case "Mid":
+                                ViewController.songsUrlMid.append(song);
+                                print("push this song M", songName, res.valueForKey("bpm") as! Float);
+                                break;
+                            case "High":
+                                ViewController.songsUrlHigh.append(song);
+                                print("push this song H", songName, res.valueForKey("bpm") as! Float);
+                                break;
+                            default:
+                                print("Error value!");
+                                break;
+                        }
                         
                         break;
                     }

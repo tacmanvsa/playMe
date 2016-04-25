@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "playMe/ViewController.swift"
-            timestampString = "483221629.598088"
+            timestampString = "483298958.888715"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
             landmarkName = "getInformation()"
             landmarkType = "5">
          </BreakpointContent>
@@ -188,22 +188,6 @@
             startingLineNumber = "27"
             endingLineNumber = "27"
             landmarkName = "init()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "playMe/ViewController.swift"
-            timestampString = "483221369.778113"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "fastForwardMusic(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
