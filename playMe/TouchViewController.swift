@@ -66,67 +66,55 @@ class TouchViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 206, green: 38, blue: 54);
         
         if(loopCnt < 5) {
-            
             if(self.prepared) {
                 loopCnt += 1;
                 self.time = 0; // if the user hits the button before green, then set timer to null of
                                // and don't count it to average 
                 waitingForGreen = true;
-//                self.logoLabel.font = UIFont.fontAwesomeOfSize(200);
-//                self.logoLabel.text = String.fontAwesomeIconWithCode("fa-clock-o");
                 self.timerLabel.text = "";
-                self.headerLabel.text = "If the screen is green touch!";
+                self.headerLabel.text = "Ak je pozadie obrazovky zelená stlač displej!";
                 
                 // It's something like sleep, but its not on the main thread
                 let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(grabRandomTime()) * Int64(NSEC_PER_SEC))
                     dispatch_after(time, dispatch_get_main_queue()) {
                         self.startTime = NSDate.timeIntervalSinceReferenceDate();
-                
                         NSTimer.scheduledTimerWithTimeInterval(
                             0.02,
                             target: self,
-                            selector: "displayTime:",
+                            selector: #selector(TouchViewController.displayTime(_:)),
                             userInfo: nil,
                             repeats: true);
                     }
             } else {
                 waitingForGreen = false;
-                
                 if(self.time * 1000 == 0) {
                     self.timerLabel.numberOfLines = 0;
-                    self.timerLabel.text = "UPS! Too fast!";
+                    self.timerLabel.text = "UPS! Počkaj na zelenú obrazovku!";
                 } else {
                     self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
                 }
-                
                 self.view.backgroundColor = UIColor(red: 43, green: 135, blue: 209);
-                self.headerLabel.text = "Touch to begin again!";
+                self.headerLabel.text = "Stlač obrazovku pre ďalšie meranie!";
                 timeArray.append(self.time); // append the time to array
                 self.time = 0; // zero for the next loop
                 self.startTime = 0; // zero for the next loop
                 
                 // set the Avg
-                avgStr = "Average | " + countAverage();
+                avgStr = "Priemer | " + countAverage();
                 avgLabel.text = avgStr;
                 
                 // set the Tries
-                triesStr = "Tries | " + String(loopCnt) + " of 5";
+                triesStr = "Pokusy | " + String(loopCnt) + " z 5";
                 triesLabel.text = triesStr;
-                
             }
-            
         } else { // after 5 tests, we can go to the next view
-            
-            triesStr = "Tries | 5 of 5";
+            triesStr = "Pokusy | 5 z 5";
             triesLabel.text = triesStr;
             self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
-            
             
             appModel.setAvgRt(Int(avg));
             nextButton.hidden = false;
         }
-        
-        
     }
     
     // function returning random number between 2 and 6

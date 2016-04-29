@@ -19,7 +19,7 @@ class TableViewController: UITableViewController {
         bleHandler?.isCentralManagerOn();
         print("viewdidload of tableview");
         // notifications when we found devices, these devices are then represented in the tableview
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList:", name:"refreshMyTableView", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TableViewController.refreshList(_:)), name:"refreshMyTableView", object: nil);
         // Do any additional setup after loading the view, typically from a nib.
     }
     
