@@ -34,8 +34,8 @@ class TouchViewController: UIViewController {
     var prepared : Bool = false; // control headings and background color
     var loopCnt : Int = 0; // counting the number of loops
     var waitingForGreen : Bool = false; // Check if the user touched the screen before green screen
-    var triesStr = String("Tries | 0 of 5");
-    var avgStr = String("Average | 0ms");
+    var triesStr = String("Pokusy | 0 of 5");
+    var avgStr = String("Primer | 0ms");
     var sum : Double = 0;
     var avg : Double = 0;
     
@@ -62,6 +62,8 @@ class TouchViewController: UIViewController {
     
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.timerLabel.font = self.timerLabel.font.fontWithSize(40);
+        
         self.prepared = !self.prepared;
         self.view.backgroundColor = UIColor(red: 206, green: 38, blue: 54);
         
@@ -89,11 +91,11 @@ class TouchViewController: UIViewController {
                 waitingForGreen = false;
                 if(self.time * 1000 == 0) {
                     self.timerLabel.numberOfLines = 0;
-                    self.timerLabel.text = "UPS! Počkaj na zelenú obrazovku!";
+                    self.timerLabel.text = "UPS! Počkaj na zelené pozadie!";
                 } else {
                     self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
                 }
-                self.view.backgroundColor = UIColor(red: 43, green: 135, blue: 209);
+                self.view.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
                 self.headerLabel.text = "Stlač obrazovku pre ďalšie meranie!";
                 timeArray.append(self.time); // append the time to array
                 self.time = 0; // zero for the next loop
@@ -108,6 +110,7 @@ class TouchViewController: UIViewController {
                 triesLabel.text = triesStr;
             }
         } else { // after 5 tests, we can go to the next view
+            self.view.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
             triesStr = "Pokusy | 5 z 5";
             triesLabel.text = triesStr;
             self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;

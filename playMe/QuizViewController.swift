@@ -132,12 +132,10 @@ class QuizViewController: UIViewController {
     func endOfQuiz() {
         for i in 0 ..< buttons.count {
             buttons[i].enabled = false;
+            buttons[i].backgroundColor = UIColor.grayColor();
         }
         
         nextButton.hidden = false;
-        quizLabel.text = "Tap next to continue!";
-        quizLabel.textColor = UIColor.redColor();
-        
     }
     
 }

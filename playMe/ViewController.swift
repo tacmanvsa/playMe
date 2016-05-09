@@ -252,7 +252,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             try ViewController.player = AVAudioPlayer(contentsOfURL: returnUrlOfActualItem(index));
             ViewController.player!.delegate = self;
             ViewController.player!.play();
-            ViewController.player?.peakPowerForChannel(<#T##channelNumber: Int##Int#>)
+            //ViewController.player?.peakPowerForChannel(<#T##channelNumber: Int##Int#>)
         } catch {
             print("Audio player nefunguje");
         }

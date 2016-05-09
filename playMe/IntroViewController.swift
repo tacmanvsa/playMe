@@ -11,34 +11,42 @@ import UIKit
 struct pages {
     var header : String
     var text : String
+    var buttonText : String
 }
+
 
 class IntroViewController: UIViewController {
     
     private static var text = [
-        pages(header: "Reaction time test", text: "Check your reaction time and gave us feedback to make your experience even better. Let's go!"),
-        pages(header: "Quiz", text: "Give us some infos about your sleep and current mood. Let's go!"),
-        pages(header: "Heart rate monitor", text: "Real time monitoring of your current mental and      psychological state. Let's go!")
+        pages(header: "Test reakčných\nschopností", text: "Otestuj svoje reakcie, aby sme ti mohli zabezpečiť ešte lepšie šoférovanie!", buttonText: "Poďme na to!"),
+        pages(header: "Test ospalosti", text: "Prezraď nám viac o tvojej ospalosti a zabezpečíme Ti bezpečnú jazdu!", buttonText: "Do toho!"),
+        pages(header: "Monitorovanie pulzu", text: "Pozorujeme tvoj pulz v reálnom čase, aby sme dokázali reagovať na stratu tvojej bdelosti!",buttonText: "Zajazdime si bezpečne!")
     ];
 
     // Outlets
     @IBOutlet var textHeader: UILabel!
     @IBOutlet var textArea: UITextView!
     @IBOutlet var pageCtrl: UIPageControl!
+    @IBOutlet var buttonTxt: UIButton!
     
     
     // Action
     @IBAction func changeScreen(sender: AnyObject) {
         textArea.text = IntroViewController.text[pageCtrl.currentPage].text;
         textHeader.text = IntroViewController.text[pageCtrl.currentPage].header;
+        buttonTxt.setTitle(IntroViewController.text[pageCtrl.currentPage].buttonText, forState: .Normal);
     }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        buttonTxt.layer.cornerRadius = 5;
+        
         textArea.text = IntroViewController.text[pageCtrl.currentPage].text;
         textHeader.text = IntroViewController.text[pageCtrl.currentPage].header;
+        buttonTxt.setTitle(IntroViewController.text[pageCtrl.currentPage].buttonText, forState: .Normal);
         
         // Do any additional setup after loading the view.
     }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		504B31E71CB6D30500CAD209 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B31E61CB6D30500CAD209 /* AppModel.swift */; };
+		504C8FFC1CE10C5800EFDA73 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504C8FFB1CE10C5800EFDA73 /* Launch Screen.storyboard */; };
+		504C8FFE1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */; };
 		507013881CA53DD60037B8D4 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 507013871CA53DD60037B8D4 /* BPMDetector.mm */; };
 		5070138C1CA59DC30037B8D4 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = 5070138B1CA59DC30037B8D4 /* Music */; };
 		5070138E1CA5A3410037B8D4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070138D1CA5A3410037B8D4 /* IntroViewController.swift */; };
@@ -25,7 +27,6 @@
 		50E0C4D31CA3ECC500B9B04D /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4A31CA3ECC500B9B04D /* AudioPlayer.swift */; };
 		50E0C4D41CA3ECC500B9B04D /* BLEHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4A41CA3ECC500B9B04D /* BLEHandler.swift */; };
 		50E0C4D51CA3ECC500B9B04D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4A51CA3ECC500B9B04D /* CustomCell.swift */; };
-		50E0C4D71CA3ECC500B9B04D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E0C4A71CA3ECC500B9B04D /* LaunchScreen.storyboard */; };
 		50E0C4D81CA3ECC500B9B04D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E0C4A81CA3ECC500B9B04D /* Main.storyboard */; };
 		50E0C4E61CA3ECC500B9B04D /* MusicSongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4B71CA3ECC500B9B04D /* MusicSongs.swift */; };
 		50E0C4E71CA3ECC500B9B04D /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4B91CA3ECC500B9B04D /* QuizViewController.swift */; };
@@ -60,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		504B31E61CB6D30500CAD209 /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../AppModel.swift; sourceTree = "<group>"; };
+		504C8FFB1CE10C5800EFDA73 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StanfordSleepinessScaleViewController.swift; sourceTree = "<group>"; };
 		507013861CA53DD60037B8D4 /* BPMDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMDetector.h; sourceTree = "<group>"; };
 		507013871CA53DD60037B8D4 /* BPMDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BPMDetector.mm; sourceTree = "<group>"; };
 		5070138B1CA59DC30037B8D4 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Music; sourceTree = "<group>"; };
@@ -80,7 +83,6 @@
 		50E0C4A41CA3ECC500B9B04D /* BLEHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEHandler.swift; sourceTree = "<group>"; };
 		50E0C4A51CA3ECC500B9B04D /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		50E0C4A61CA3ECC500B9B04D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50E0C4A71CA3ECC500B9B04D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50E0C4A81CA3ECC500B9B04D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		50E0C4B71CA3ECC500B9B04D /* MusicSongs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSongs.swift; sourceTree = "<group>"; };
 		50E0C4B81CA3ECC500B9B04D /* playMe-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "playMe-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				504B31E61CB6D30500CAD209 /* AppModel.swift */,
 				5070138D1CA5A3410037B8D4 /* IntroViewController.swift */,
 				50E0C4CF1CA3ECC500B9B04D /* TouchViewController.swift */,
+				504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */,
 				50E0C4B91CA3ECC500B9B04D /* QuizViewController.swift */,
 				50E0C4CE1CA3ECC500B9B04D /* TableViewController.swift */,
 				50E0C4D01CA3ECC500B9B04D /* ViewController.swift */,
@@ -167,9 +170,9 @@
 				507013871CA53DD60037B8D4 /* BPMDetector.mm */,
 				50E0C4B81CA3ECC500B9B04D /* playMe-Bridging-Header.h */,
 				50E0C4A61CA3ECC500B9B04D /* Info.plist */,
-				50E0C4A71CA3ECC500B9B04D /* LaunchScreen.storyboard */,
 				50E0C4A81CA3ECC500B9B04D /* Main.storyboard */,
 				50E0C4A21CA3ECC500B9B04D /* Assets.xcassets */,
+				504C8FFB1CE10C5800EFDA73 /* Launch Screen.storyboard */,
 			);
 			path = playMe;
 			sourceTree = "<group>";
@@ -365,7 +368,7 @@
 				50E0C4D21CA3ECC500B9B04D /* Assets.xcassets in Resources */,
 				5070138C1CA59DC30037B8D4 /* Music in Resources */,
 				50E0C4D81CA3ECC500B9B04D /* Main.storyboard in Resources */,
-				50E0C4D71CA3ECC500B9B04D /* LaunchScreen.storyboard in Resources */,
+				504C8FFC1CE10C5800EFDA73 /* Launch Screen.storyboard in Resources */,
 				50E0C45E1CA3E7A700B9B04D /* SqLite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +412,7 @@
 				50E0C4F11CA3ECC500B9B04D /* ViewController.swift in Sources */,
 				50E0C4E91CA3ECC500B9B04D /* FMDatabaseAdditions.m in Sources */,
 				5070138E1CA5A3410037B8D4 /* IntroViewController.swift in Sources */,
+				504C8FFE1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
