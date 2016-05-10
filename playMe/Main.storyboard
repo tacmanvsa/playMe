@@ -315,7 +315,7 @@
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sjK-WY-JAk">
                                 <rect key="frame" x="20" y="490" width="280" height="58"/>
@@ -376,19 +376,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rVK-GY-PeJ">
-                                <rect key="frame" x="0.0" y="122" width="320" height="336"/>
-                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r60-lO-xW6">
                                 <rect key="frame" x="20" y="490" width="280" height="58"/>
                                 <color key="backgroundColor" red="0.16862745100000001" green="0.52941176469999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Hotovo!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextView:" destination="nUv-V1-x04" eventType="touchUpInside" id="Cvg-n1-YzR"/>
+                                    <segue destination="Z3d-k1-DxQ" kind="show" id="GFv-9l-Ee2"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vyber možnosť, ktorá najlepšie popisuje tvoj stav!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94V-oN-NbC">
+                                <rect key="frame" x="20" y="28" width="280" height="90"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rVK-GY-PeJ">
+                                <rect key="frame" x="0.0" y="141" width="320" height="300"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -548,6 +558,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="GFv-9l-Ee2"/>
         <segue reference="nzq-0J-3GE"/>
     </inferredMetricsTieBreakers>
 </document>

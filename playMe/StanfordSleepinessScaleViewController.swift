@@ -17,7 +17,11 @@ class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDeleg
     
     @IBOutlet var pickerView: UIPickerView!
     
+    // Data model
+    var appModel : AppModel = AppModel();
+    
     private var pickerData : [Quiz] = [];
+    private var selected : Quiz?;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +38,8 @@ class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDeleg
         pickerData.append(Quiz(question: "Už nebojuješ so spánkom, zachvílu zaspíš, myšlienky blízko sna", point: 7));
         pickerData.append(Quiz(question: "Spánok", point: 0));
         
+        
+        selected = pickerData[0];
         // Do any additional setup after loading the view.
     }
 
@@ -52,24 +58,29 @@ class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDeleg
     }
     
     
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return pickerData[row].question;
-//    }
-    
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let titleData = pickerData[row].question;
-        
-        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.whiteColor()])
-        
-        return myTitle;
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 60;
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row].question;
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        let label = UILabel(frame: CGRectMake(0, 0, 300, 44));
+        label.lineBreakMode = .ByWordWrapping;
+        label.textColor = UIColor.whiteColor();
+        label.numberOfLines = 0;
+        label.text = pickerData[row].question;
+        label.textAlignment = .Center;
+        
+        return label;
     }
+    
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("selected row", pickerData[row].question);
+        
+        selected = pickerData[row];
+    }
+    
+    @IBAction func nextView(sender: AnyObject) {
+        appModel.setSSSIndex((selected?.point)!);
     }
     
     /*
