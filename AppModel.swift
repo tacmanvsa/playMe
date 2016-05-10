@@ -14,7 +14,7 @@ class AppModel {
     private static var avgRt : Int = Int();
     private static var quizIndex : Int = Int();
     private static var sssPoint : Int = Int();
-    
+    private static var epsPoint = [Int]();
     
     internal func getAvgRt() -> Int {
         return AppModel.avgRt;
@@ -40,6 +40,11 @@ class AppModel {
     internal func setSSSIndex(point : Int) {
         print("set point sss", point);
         AppModel.sssPoint = point;
+    }
+   
+    internal func pushESSIndex(point: Int) {
+        print("points ESS", point);
+        AppModel.epsPoint.append(point);
     }
     
 }
