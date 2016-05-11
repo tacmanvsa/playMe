@@ -14,13 +14,17 @@ class TableViewController: UITableViewController {
     var bleHandler : BLEHandler?;
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
+        super.viewDidAppear(true);
+        self.navigationController?.setNavigationBarHidden(false, animated: true);
+        
+        self.tableView.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
+        
         bleHandler = BLEHandler();
         bleHandler?.isCentralManagerOn();
-        print("viewdidload of tableview");
+        
         // notifications when we found devices, these devices are then represented in the tableview
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TableViewController.refreshList(_:)), name:"refreshMyTableView", object: nil);
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,8 +55,9 @@ class TableViewController: UITableViewController {
         // Configure the cell...
         //cell.imageDevice.image = UIImage(named: "heartrate.png")
         cell.labelDevice.text = bleHandler!.nameOfDevices[indexPath.row] as String;
+        cell.labelDevice.textColor = UIColor.whiteColor();
         
-        return cell
+        return cell;
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

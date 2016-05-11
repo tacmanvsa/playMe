@@ -17,12 +17,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="CD-icon" translatesAutoresizingMaskIntoConstraints="NO" id="pOh-hh-Fdz">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="CD-icon" translatesAutoresizingMaskIntoConstraints="NO" id="pOh-hh-Fdz">
                                 <rect key="frame" x="96" y="220" width="128" height="128"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.84565033783783783" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="pOh-hh-Fdz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1Re-1T-TxT"/>
+                            <constraint firstItem="pOh-hh-Fdz" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="OU7-Ph-2Lj"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>

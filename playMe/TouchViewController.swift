@@ -122,7 +122,7 @@ class TouchViewController: UIViewController {
     
     // function returning random number between 2 and 6
     func grabRandomTime() -> Int{
-        let time = Int(arc4random_uniform(UInt32(6)+2));
+        let time = Int(arc4random_uniform(UInt32(6)+3));
         return time;
     }
     

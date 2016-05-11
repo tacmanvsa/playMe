@@ -9,7 +9,7 @@
 import UIKit
 
 class EpworthSleepinessScaleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    // 43 135 209
     @IBOutlet var situationLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     
@@ -22,6 +22,8 @@ class EpworthSleepinessScaleViewController: UIViewController, UITableViewDelegat
         
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        
+        self.tableView.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
         
         self.situationLabel.text = situations[index];
         index += 1;
@@ -44,6 +46,8 @@ class EpworthSleepinessScaleViewController: UIViewController, UITableViewDelegat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath);
         
+        cell.textLabel?.textColor = UIColor.whiteColor();
+        cell.selectedBackgroundView?.backgroundColor = UIColor(red: 43, green: 135, blue: 209);
         cell.textLabel?.text = options[indexPath.row];
         
         return cell;
@@ -58,7 +62,8 @@ class EpworthSleepinessScaleViewController: UIViewController, UITableViewDelegat
             
             let vc: TableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ChooseYourDevice") as! TableViewController;
             
-            self.presentViewController(vc, animated: true, completion: nil);
+            let navController = UINavigationController(rootViewController: vc)
+            self.presentViewController(navController, animated: true, completion: nil);
         } else {
             index += 1;
         }

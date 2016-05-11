@@ -69,6 +69,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBOutlet var toolbar: UIToolbar!;
     
+    @IBOutlet var imageControls: UIImageView!
     
     /*
     
@@ -85,6 +86,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     *** Music player actions ***
     
     */
+    @IBAction func backButtonClick(sender: AnyObject) {
+        print("back button clicked");
+    }
     
     
     @IBAction func rewindMusic(sender: AnyObject) {
@@ -120,6 +124,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             ViewController.player!.delegate = self;
             ViewController.player!.pause();
             
+            imageControls.image = UIImage(named: "play-button-2");
+            
             getInformation();
             
             playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
@@ -128,6 +134,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         } else {
             ViewController.player!.delegate = self;
             ViewController.player!.play();
+            
+            imageControls.image = UIImage(named: "rounded-pause-button");
             
             playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
             
@@ -178,6 +186,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         firstAvg = true;
         
+//        ViewController.player = AudioPlayer.getAudioPlayer();
+        
         super.viewDidLoad();
 
         bleHandler = BLEHandler();
@@ -186,7 +196,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         bleHandler?.connectToPeripheral();
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.computeAvgBpm(_:)), name: "bpm", object: nil);
         
-        if((ViewController.player?.playing) != nil) {
+//        if((ViewController.player?.playing) != nil) {
+        if(ViewController.player != nil) {
             print("YES ITS PLAYING");
         } else {
             ViewController.player = AudioPlayer.getAudioPlayer();
