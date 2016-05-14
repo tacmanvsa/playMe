@@ -15,6 +15,7 @@ class AppModel {
     private static var quizIndex : Int = Int();
     private static var sssPoint : Int = Int();
     private static var epsPoint = [Int]();
+    private static var penalization : Int = 0;
     
     internal func getAvgRt() -> Int {
         return AppModel.avgRt;
@@ -45,6 +46,29 @@ class AppModel {
     internal func pushESSIndex(point: Int) {
         print("points ESS", point);
         AppModel.epsPoint.append(point);
+    }
+    
+    internal func calculatePenalization() {
+        if(AppModel.avgRt >= 400) {
+            AppModel.penalization = AppModel.penalization + 5;
+        }
+    
+        switch(AppModel.sssPoint) {
+        case 1, 2:
+            break;
+        case 3:
+            AppModel.penalization = AppModel.penalization + 5;
+            break;
+        case 4,5:
+            AppModel.penalization = AppModel.penalization + 10;
+        default:
+            AppModel.penalization = AppModel.penalization + 20;
+        }
+        
+    }
+    
+    internal func getPenalization() -> Int {
+        return AppModel.penalization;
     }
     
 }

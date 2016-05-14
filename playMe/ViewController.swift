@@ -65,16 +65,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet var imageControls: UIImageView!
     @IBOutlet var forwardImage: UIImageView!
     @IBOutlet var rewindImage: UIImageView!
-    
-    /*
-    
-    *** Music player destroy ***
-    
-    */
-    
-    
-    
-    
+    @IBOutlet var loadingLabel: UILabel!
     
     /*
     
@@ -88,33 +79,39 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     
     @IBAction func rewindMusic(sender: AnyObject) {
-        
-        playMusicByIndex("back");
+        if(ViewController.player!.playing) {
+            playMusicByIndex("back", playing: true);
+        } else {
+            playMusicByIndex("back", playing: false);
+        }
     }
     
     
     @IBAction func fastForwardMusic(sender: AnyObject) {
-        
-        playMusicByIndex("forward");
+        if(ViewController.player!.playing) {
+            playMusicByIndex("forward", playing: true);
+        } else {
+            playMusicByIndex("forward", playing: false);
+        }
     }
     
     
     @IBAction func playAndPauseMusic(sender: AnyObject) {
-//        let request = NSFetchRequest(entityName: "Songs");
-//        request.returnsObjectsAsFaults = false;
-//        
-//        do {
-//            let results:NSArray = try ViewController.context.executeFetchRequest(request);
-//            if(results.count > 0) {
-//                print("kolko", results.count);
-//                for res in results {
-//                    print(res);
-//                }
-//            }
-//            
-//        } catch {
-//            print("RESULT ERROR");
-//        }
+        let request = NSFetchRequest(entityName: "Songs");
+        request.returnsObjectsAsFaults = false;
+        
+        do {
+            let results:NSArray = try ViewController.context.executeFetchRequest(request);
+            if(results.count > 0) {
+                print("kolko", results.count);
+                for res in results {
+                    print(res);
+                }
+            }
+            
+        } catch {
+            print("RESULT ERROR");
+        }
         
         if( ViewController.player!.playing ) {
             ViewController.player!.delegate = self;
@@ -122,10 +119,11 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             
             imageControls.image = UIImage(named: "play");
             
-            getInformation();
+//            getInformation();
         } else {
             ViewController.player!.delegate = self;
             ViewController.player!.play();
+//            songLabel.text = getInformation();
             
             imageControls.image = UIImage(named: "pause");
         }
@@ -194,11 +192,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             print("YES ITS PLAYING");
         } else {
             ViewController.player = AudioPlayer.getAudioPlayer();
-        
-        
-        
-            // get Notifications
-            let detector : BPMDetector = BPMDetector.init();
+//            ViewController.player
             var avItems = [AVPlayerItem]();
         
             let resourcePath : NSString = NSBundle.mainBundle().resourcePath!
@@ -214,8 +208,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                     let path : NSURL = NSBundle.mainBundle().URLForResource("Music/\(itemArr[0])", withExtension: itemArr[1])!;
                 
                     avItems.append(AVPlayerItem.init(URL: path));
-                    
-//                    print("\(itemArr[0]) : ", detector.getBPM(path));
                     
                     insertSongIfNotExists(itemArr[0], path: path);
                 }
@@ -242,20 +234,23 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     */
     
     // play Music with actual index
-    func playMusicByIndex(type : String) {
+    func playMusicByIndex(type : String, playing: Bool) {
         if(type == "forward") {
-            if( index == returnSongsArrayCount(ViewController.state!) - 1 ) { index = 0; }
+            if( index >= returnSongsArrayCount(ViewController.state!) - 1 ) { index = 0; }
             else { index += 1; }
         } else if(type == "back") {
             if( index == 0 ) { index = returnSongsArrayCount(ViewController.state!) - 1; }
             else { index -= 1; }
         }
         
-        
         do {
             try ViewController.player = AVAudioPlayer(contentsOfURL: returnUrlOfActualItem(index));
             ViewController.player!.delegate = self;
-            ViewController.player!.play();
+            print("playing ", playing);
+            if(playing || type == "") {
+                ViewController.player!.play();
+//                songLabel.text = getInformation();
+            };
             //ViewController.player?.peakPowerForChannel(<#T##channelNumber: Int##Int#>)
         } catch {
             print("Audio player nefunguje");
@@ -295,7 +290,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 firstAvg = false;
             }
         } else {
-            if(pulse.count  >= 60) {
+            if(pulse.count  >= 240) {
                 let pulseArray = pulse;
                 pulse.removeAll();
                 calcAvgPulse(pulseArray);
@@ -338,10 +333,11 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         print( "\n VIEWCONTROLLER STATE : ", ViewController.state, "\n" );
         
         if(firstAvg) {
-            playMusicByIndex("")
+            playMusicByIndex("", playing: false);
             imageControls.hidden = false;
             forwardImage.hidden = false;
             rewindImage.hidden = false;
+            loadingLabel.hidden = true;
         };
     }
     
@@ -374,15 +370,19 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         switch(ViewController.state!) {
         case 0:
             url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlELow[index].songUrl)", withExtension: ViewController.songsUrlELow[index].songType)!;
+            songLabel.text = ViewController.songsUrlELow[index].songUrl;
             break;
         case 1:
             url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlLow[index].songUrl)", withExtension: ViewController.songsUrlLow[index].songType)!;
+            songLabel.text = ViewController.songsUrlLow[index].songUrl;
             break;
         case 2:
             url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlMid[index].songUrl)", withExtension: ViewController.songsUrlMid[index].songType)!;
+            songLabel.text = ViewController.songsUrlMid[index].songUrl;
             break;
         case 3:
             url = NSBundle.mainBundle().URLForResource("Music/\(ViewController.songsUrlHigh[index].songUrl)", withExtension: ViewController.songsUrlHigh[index].songType)!;
+            songLabel.text = ViewController.songsUrlHigh[index].songUrl;
             break;
         default:
             url = NSBundle.mainBundle().URLForResource("Music/AdeleChasingPavements", withExtension: "mp3")!;
@@ -403,9 +403,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         let currentSongTitle = AVMetadataItem.metadataItemsFromArray(metadata, filteredByIdentifier: AVMetadataCommonIdentifierTitle);
         let currentSongArtist = AVMetadataItem.metadataItemsFromArray(metadata, filteredByIdentifier: AVMetadataCommonIdentifierArtist);
         
-//        print("\(currentSongArtist): \(currentSongTitle)");
+        print("\(currentSongArtist): \(currentSongTitle)");
         
-        return "\(currentSongArtist): \(currentSongTitle)";
+        return "\(currentSongArtist[0].value): \(currentSongTitle[0].value)";
     }
     
     
@@ -415,8 +415,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 //        songLabel.text = (player.nowPlayingItem?.artist)! + ": " + (player.nowPlayingItem?.title)!;
     }
     
+    
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-        fastForwardMusic(UIBarButtonItem);
+        playMusicByIndex("forward", playing: true);
     }
 
     
@@ -437,6 +438,32 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
+    func categorizeMusic(url: String, type: String, bpm: Float) {
+        var song : MusicSongs = MusicSongs(songUrl: url, songType: type, songBpm: bpm);
+        
+        switch(song.category!) {
+            case "ELow" :
+                ViewController.songsUrlELow.append(song);
+                print("push this song EL", url, bpm);
+                break;
+            case "Low" :
+                ViewController.songsUrlLow.append(song);
+                print("push this song L", url, bpm);
+                break;
+            case "Mid":
+                ViewController.songsUrlMid.append(song);
+                print("push this song M", url, bpm);
+                break;
+            case "High":
+                ViewController.songsUrlHigh.append(song);
+                print("push this song H", url, bpm);
+                break;
+            default:
+                print("Error value!");
+                break;
+        }
+    }
+    
     // IDENTIFIKUJE NOVEHO, TREBA HO UZ LEN PRIDAT A VYRATAT BPM
     func insertSongIfNotExists(songName : String, path : NSURL) {
         var newSong : Bool = true;
@@ -452,29 +479,30 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                     if( songName == res.valueForKey("song_name") as! String ) {
                         newSong = false;
                         
-                        var song : MusicSongs = MusicSongs(songUrl: songName, songType: "mp3", songBpm: res.valueForKey("bpm") as! Float);
-                        
-                        switch(song.category!) {
-                            case "ELow" :
-                                ViewController.songsUrlELow.append(song);
-                                print("push this song EL", songName, res.valueForKey("bpm") as! Float);
-                                break;
-                            case "Low" :
-                                ViewController.songsUrlLow.append(song);
-                                print("push this song L", songName, res.valueForKey("bpm") as! Float);
-                                break;
-                            case "Mid":
-                                ViewController.songsUrlMid.append(song);
-                                print("push this song M", songName, res.valueForKey("bpm") as! Float);
-                                break;
-                            case "High":
-                                ViewController.songsUrlHigh.append(song);
-                                print("push this song H", songName, res.valueForKey("bpm") as! Float);
-                                break;
-                            default:
-                                print("Error value!");
-                                break;
-                        }
+                        categorizeMusic(songName, type: "mp3", bpm: res.valueForKey("bpm") as! Float);
+//                        var song : MusicSongs = MusicSongs(songUrl: songName, songType: "mp3", songBpm: res.valueForKey("bpm") as! Float);
+//                        
+//                        switch(song.category!) {
+//                            case "ELow" :
+//                                ViewController.songsUrlELow.append(song);
+//                                print("push this song EL", songName, res.valueForKey("bpm") as! Float);
+//                                break;
+//                            case "Low" :
+//                                ViewController.songsUrlLow.append(song);
+//                                print("push this song L", songName, res.valueForKey("bpm") as! Float);
+//                                break;
+//                            case "Mid":
+//                                ViewController.songsUrlMid.append(song);
+//                                print("push this song M", songName, res.valueForKey("bpm") as! Float);
+//                                break;
+//                            case "High":
+//                                ViewController.songsUrlHigh.append(song);
+//                                print("push this song H", songName, res.valueForKey("bpm") as! Float);
+//                                break;
+//                            default:
+//                                print("Error value!");
+//                                break;
+//                        }
                         
                         break;
                     }
@@ -487,6 +515,20 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         if(newSong) {
             print("ano nerovnaju sa", songName);
+            var newSongBpm = ViewController.detector.getBPM(path);
+            
+            let newSong = NSEntityDescription.insertNewObjectForEntityForName("Songs", inManagedObjectContext: ViewController.context) as NSManagedObject;
+            
+            newSong.setValue(songName, forKey: "song_name");
+            newSong.setValue(newSongBpm, forKey: "bpm");
+            
+            categorizeMusic(songName, type: "mp3", bpm: newSongBpm);
+            
+            do {
+                try ViewController.context.save();
+            } catch {
+                print("Error in saving");
+            }
         }
     }
     
