@@ -65,6 +65,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet var imageControls: UIImageView!
     @IBOutlet var forwardImage: UIImageView!
     @IBOutlet var rewindImage: UIImageView!
+    @IBOutlet var loadingLabel: UILabel!
     
     /*
     
@@ -157,6 +158,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
         firstAvg = true;
         
+        // loading label
+        loadingLabel.text = "Analyzujem pulz...";
+        
         // hide controls until first play
         imageControls.hidden = true;
         forwardImage.hidden = true;
@@ -164,7 +168,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 //        ViewController.player = AudioPlayer.getAudioPlayer();
         
         // define control events
-        
         // play image
         let imageView = imageControls;
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(ViewController.playAndPauseMusic(_:)))
@@ -342,6 +345,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             imageControls.hidden = false;
             forwardImage.hidden = false;
             rewindImage.hidden = false;
+            loadingLabel.hidden = true;
         };
     }
     
