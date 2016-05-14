@@ -60,16 +60,11 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBOutlet var navigationTitle: UINavigationItem!; // The navigation bar title - which is the label of the choosen device
     @IBOutlet var heartRateLabel: UILabel!; // Label in the navigation tab for the heart rate
-    
     @IBOutlet var songImage: UIImageView!;
-    
     @IBOutlet var songLabel: UILabel!;
-    
-    @IBOutlet var playButton: UIBarButtonItem!;
-    
-    @IBOutlet var toolbar: UIToolbar!;
-    
     @IBOutlet var imageControls: UIImageView!
+    @IBOutlet var forwardImage: UIImageView!
+    @IBOutlet var rewindImage: UIImageView!
     
     /*
     
@@ -86,6 +81,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     *** Music player actions ***
     
     */
+  
     @IBAction func backButtonClick(sender: AnyObject) {
         print("back button clicked");
     }
@@ -104,43 +100,34 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     
     @IBAction func playAndPauseMusic(sender: AnyObject) {
-        let request = NSFetchRequest(entityName: "Songs");
-        request.returnsObjectsAsFaults = false;
-        
-        do {
-            let results:NSArray = try ViewController.context.executeFetchRequest(request);
-            if(results.count > 0) {
-                print("kolko", results.count);
-                for res in results {
-                    print(res);
-                }
-            }
-            
-        } catch {
-            print("RESULT ERROR");
-        }
+//        let request = NSFetchRequest(entityName: "Songs");
+//        request.returnsObjectsAsFaults = false;
+//        
+//        do {
+//            let results:NSArray = try ViewController.context.executeFetchRequest(request);
+//            if(results.count > 0) {
+//                print("kolko", results.count);
+//                for res in results {
+//                    print(res);
+//                }
+//            }
+//            
+//        } catch {
+//            print("RESULT ERROR");
+//        }
         
         if( ViewController.player!.playing ) {
             ViewController.player!.delegate = self;
             ViewController.player!.pause();
             
-            imageControls.image = UIImage(named: "play-button-2");
+            imageControls.image = UIImage(named: "play");
             
             getInformation();
-            
-            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
-            
-            toolbar.items![1] = playButton; //apply for first toolbar item
         } else {
             ViewController.player!.delegate = self;
             ViewController.player!.play();
             
-            imageControls.image = UIImage(named: "rounded-pause-button");
-            
-            playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: #selector(ViewController.playAndPauseMusic(_:)));
-            
-            toolbar.items![1] = playButton; //apply for first toolbar item
-
+            imageControls.image = UIImage(named: "pause");
         }
     }
     
@@ -157,23 +144,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     // Segue variable
     var controllerTitle = "";
-    
-    
-    
-    /*
-    
-    *** The player variable ***
-    
-    */
-    
-    
-    // Player variable
-    
-//    var player = MPMusicPlayerController.applicationMusicPlayer();
-//    var player = AudioPlayer.getAudioPlayer();
-    
-    
-    
+ 
     /*
     
     *** Default "view did load" functions ***
@@ -182,14 +153,36 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     // The view loads
     override func viewDidLoad() {
-        // Initializing the centralManager
-        
+        super.viewDidLoad();
+    
         firstAvg = true;
         
+        // hide controls until first play
+        imageControls.hidden = true;
+        forwardImage.hidden = true;
+        rewindImage.hidden = true;
 //        ViewController.player = AudioPlayer.getAudioPlayer();
         
-        super.viewDidLoad();
-
+        // define control events
+        
+        // play image
+        let imageView = imageControls;
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(ViewController.playAndPauseMusic(_:)))
+        imageView.userInteractionEnabled = true;
+        imageView.addGestureRecognizer(tapGestureRecognizer);
+        
+        // forward image
+        let imageView2 = forwardImage;
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target:self, action:#selector(ViewController.fastForwardMusic(_:)))
+        imageView2.userInteractionEnabled = true;
+        imageView2.addGestureRecognizer(tapGestureRecognizer2);
+        
+        // rewind image
+        let imageView3 = rewindImage;
+        let tapGestureRecognizer3 = UITapGestureRecognizer(target:self, action:#selector(ViewController.rewindMusic(_:)))
+        imageView3.userInteractionEnabled = true;
+        imageView3.addGestureRecognizer(tapGestureRecognizer3);
+        
         bleHandler = BLEHandler();
         
         navigationTitle.title = BLEHandler.choosenDevice as? String;
@@ -344,7 +337,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         print( "\n AVG : ", avg);
         print( "\n VIEWCONTROLLER STATE : ", ViewController.state, "\n" );
         
-        if(firstAvg) { playMusicByIndex("") };
+        if(firstAvg) {
+            playMusicByIndex("")
+            imageControls.hidden = false;
+            forwardImage.hidden = false;
+            rewindImage.hidden = false;
+        };
     }
     
     

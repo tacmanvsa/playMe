@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="agq-pr-Qch">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="app-zu-DxD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -19,7 +19,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0NJ-NC-rnX">
-                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="w4f-X4-CXq"/>
+                                </constraints>
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem title="Title" id="Xj5-Ob-9Qr">
@@ -35,76 +38,67 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frh-pv-n0C">
                                 <rect key="frame" x="258" y="39" width="42" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="42" id="uza-Dz-IJ0"/>
+                                    <constraint firstAttribute="width" constant="42" id="0wB-Ei-2G1"/>
+                                    <constraint firstAttribute="height" constant="21" id="YVq-bW-n0E"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MzF-k1-Lv2">
-                                <rect key="frame" x="0.0" y="72" width="320" height="237"/>
-                            </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhe-lL-yzP">
-                                <rect key="frame" x="20" y="378" width="280" height="44"/>
-                                <items>
-                                    <barButtonItem systemItem="rewind" id="GWX-Rd-z6Z">
-                                        <connections>
-                                            <action selector="rewindMusic:" destination="Pu6-if-cvY" id="Ctw-UQ-co2"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="pause" id="i2r-PU-mQN">
-                                        <connections>
-                                            <action selector="playAndPauseMusic:" destination="Pu6-if-cvY" id="NoJ-ki-NdB"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="90" systemItem="fastForward" id="ADE-XF-Qc8">
-                                        <connections>
-                                            <action selector="fastForwardMusic:" destination="Pu6-if-cvY" id="m0p-j5-UIK"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQJ-lk-QS4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQJ-lk-QS4">
                                 <rect key="frame" x="20" y="325" width="280" height="27"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="mm4-ea-4Is"/>
+                                    <constraint firstAttribute="height" constant="27" id="SBs-vS-Ets"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play-button-2" translatesAutoresizingMaskIntoConstraints="NO" id="eUm-91-sxv">
-                                <rect key="frame" x="128" y="462" width="60" height="60"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pause" translatesAutoresizingMaskIntoConstraints="NO" id="eUm-91-sxv">
+                                <rect key="frame" x="120" y="365" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="hjS-dP-yxu"/>
+                                </constraints>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="rewind" translatesAutoresizingMaskIntoConstraints="NO" id="Xb0-GD-VL7">
+                                <rect key="frame" x="20" y="365" width="92" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="VsZ-f2-fJU"/>
+                                </constraints>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="forward" translatesAutoresizingMaskIntoConstraints="NO" id="Eiq-1f-qcy">
+                                <rect key="frame" x="208" y="365" width="92" height="80"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="0NJ-NC-rnX" firstAttribute="leading" secondItem="sRM-Ho-6Gg" secondAttribute="leading" id="0Sd-mq-gdT"/>
-                            <constraint firstItem="Yhe-lL-yzP" firstAttribute="top" secondItem="dQJ-lk-QS4" secondAttribute="bottom" constant="26" id="6nR-Jn-VjV"/>
-                            <constraint firstItem="0NJ-NC-rnX" firstAttribute="top" secondItem="H22-JN-hx3" secondAttribute="bottom" constant="8" id="7lp-Mr-XYA"/>
-                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="leading" secondItem="sRM-Ho-6Gg" secondAttribute="leadingMargin" constant="4" id="McM-4Z-Tko"/>
-                            <constraint firstItem="MzF-k1-Lv2" firstAttribute="top" secondItem="0NJ-NC-rnX" secondAttribute="bottom" id="X5n-D5-16X"/>
-                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="trailing" secondItem="Yhe-lL-yzP" secondAttribute="trailing" id="Yle-0E-IDK"/>
-                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="top" secondItem="MzF-k1-Lv2" secondAttribute="bottom" constant="16" id="Zsc-kV-I2f"/>
-                            <constraint firstItem="Yhe-lL-yzP" firstAttribute="leading" secondItem="dQJ-lk-QS4" secondAttribute="leading" id="fer-KX-m09"/>
-                            <constraint firstAttribute="trailing" secondItem="MzF-k1-Lv2" secondAttribute="trailing" id="g6T-e6-sRk"/>
-                            <constraint firstItem="MzF-k1-Lv2" firstAttribute="centerX" secondItem="dQJ-lk-QS4" secondAttribute="centerX" id="nJT-R2-iUa"/>
-                            <constraint firstItem="Frh-pv-n0C" firstAttribute="centerY" secondItem="0NJ-NC-rnX" secondAttribute="centerY" id="nSw-36-CKX"/>
-                            <constraint firstItem="MzF-k1-Lv2" firstAttribute="top" secondItem="Frh-pv-n0C" secondAttribute="bottom" constant="12" id="q21-az-GlW"/>
-                            <constraint firstItem="MzF-k1-Lv2" firstAttribute="leading" secondItem="0NJ-NC-rnX" secondAttribute="leading" id="sRg-LB-HLm"/>
-                            <constraint firstItem="0NJ-NC-rnX" firstAttribute="trailing" secondItem="MzF-k1-Lv2" secondAttribute="trailing" id="t45-fJ-Ujx"/>
-                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="trailing" secondItem="Frh-pv-n0C" secondAttribute="trailing" id="uVM-va-mOR"/>
+                            <constraint firstItem="0NJ-NC-rnX" firstAttribute="centerX" secondItem="dQJ-lk-QS4" secondAttribute="centerX" id="00U-vq-nHU"/>
+                            <constraint firstItem="eUm-91-sxv" firstAttribute="leading" secondItem="Xb0-GD-VL7" secondAttribute="trailing" constant="8" symbolic="YES" id="5af-oQ-4lv"/>
+                            <constraint firstItem="Frh-pv-n0C" firstAttribute="trailing" secondItem="dQJ-lk-QS4" secondAttribute="trailing" id="CWJ-xX-eS1"/>
+                            <constraint firstItem="0NJ-NC-rnX" firstAttribute="top" secondItem="sRM-Ho-6Gg" secondAttribute="top" id="CbQ-OJ-gpB"/>
+                            <constraint firstItem="Xb0-GD-VL7" firstAttribute="bottom" secondItem="eUm-91-sxv" secondAttribute="bottom" id="Guo-1k-fuB"/>
+                            <constraint firstItem="5Fi-SK-mxD" firstAttribute="top" secondItem="Xb0-GD-VL7" secondAttribute="bottom" constant="123" id="JYI-BU-gu7"/>
+                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="trailing" secondItem="Eiq-1f-qcy" secondAttribute="trailing" id="NXq-Vp-7AJ"/>
+                            <constraint firstItem="eUm-91-sxv" firstAttribute="top" secondItem="Eiq-1f-qcy" secondAttribute="top" id="P54-Kj-8vl"/>
+                            <constraint firstItem="Eiq-1f-qcy" firstAttribute="leading" secondItem="eUm-91-sxv" secondAttribute="trailing" constant="8" symbolic="YES" id="TUt-lw-VmU"/>
+                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="centerX" secondItem="eUm-91-sxv" secondAttribute="centerX" id="Vdi-As-Ikc"/>
+                            <constraint firstItem="Xb0-GD-VL7" firstAttribute="top" secondItem="eUm-91-sxv" secondAttribute="top" id="a7y-Qq-RRV"/>
+                            <constraint firstItem="Frh-pv-n0C" firstAttribute="top" secondItem="H22-JN-hx3" secondAttribute="bottom" constant="19" id="gZq-Q6-3nN"/>
+                            <constraint firstItem="0NJ-NC-rnX" firstAttribute="leading" secondItem="sRM-Ho-6Gg" secondAttribute="leading" id="i9F-j0-iMD"/>
+                            <constraint firstAttribute="trailing" secondItem="0NJ-NC-rnX" secondAttribute="trailing" id="mRI-r2-le5"/>
+                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="leading" secondItem="Xb0-GD-VL7" secondAttribute="leading" id="sXv-As-DAY"/>
+                            <constraint firstItem="dQJ-lk-QS4" firstAttribute="leading" secondItem="sRM-Ho-6Gg" secondAttribute="leadingMargin" constant="4" id="zFB-Vh-VeR"/>
+                            <constraint firstItem="Xb0-GD-VL7" firstAttribute="top" secondItem="dQJ-lk-QS4" secondAttribute="bottom" constant="13" id="zLT-r5-8yq"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="forwardImage" destination="Eiq-1f-qcy" id="cxA-kr-Ose"/>
                         <outlet property="heartRateLabel" destination="Frh-pv-n0C" id="64k-xe-npr"/>
                         <outlet property="imageControls" destination="eUm-91-sxv" id="Y6W-O4-c7z"/>
                         <outlet property="navigationTitle" destination="Xj5-Ob-9Qr" id="0FC-R4-1rZ"/>
-                        <outlet property="playButton" destination="i2r-PU-mQN" id="yQt-l0-UYL"/>
-                        <outlet property="songImage" destination="MzF-k1-Lv2" id="1ST-iO-2a2"/>
+                        <outlet property="rewindImage" destination="Xb0-GD-VL7" id="vBk-VC-Lxt"/>
                         <outlet property="songLabel" destination="dQJ-lk-QS4" id="lsf-T1-zZA"/>
-                        <outlet property="toolbar" destination="Yhe-lL-yzP" id="MKd-Xj-fRm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="raJ-oX-Sax" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -391,7 +385,7 @@
                                         <rect key="frame" x="0.0" y="28" width="280" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="glt-sp-Pf4" id="Uv4-gH-CHA">
-                                            <rect key="frame" x="0.0" y="0.0" width="280" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="280" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -625,7 +619,6 @@
         <!--Navigation Controller-->
         <scene sceneID="viy-qV-YxB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nCc-vB-TdB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Ff-Hg-7Im" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -638,11 +631,14 @@
                         <segue destination="app-zu-DxD" kind="relationship" relationship="rootViewController" id="JhS-bV-Ceg"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nCc-vB-TdB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="687" y="649"/>
         </scene>
     </scenes>
     <resources>
-        <image name="play-button-2" width="64" height="64"/>
+        <image name="forward" width="80" height="80"/>
+        <image name="pause" width="128" height="128"/>
+        <image name="rewind" width="80" height="80"/>
     </resources>
 </document>
