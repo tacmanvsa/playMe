@@ -30,7 +30,6 @@
 		50E0C4D51CA3ECC500B9B04D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4A51CA3ECC500B9B04D /* CustomCell.swift */; };
 		50E0C4D81CA3ECC500B9B04D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E0C4A81CA3ECC500B9B04D /* Main.storyboard */; };
 		50E0C4E61CA3ECC500B9B04D /* MusicSongs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4B71CA3ECC500B9B04D /* MusicSongs.swift */; };
-		50E0C4E71CA3ECC500B9B04D /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4B91CA3ECC500B9B04D /* QuizViewController.swift */; };
 		50E0C4E81CA3ECC500B9B04D /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4BC1CA3ECC500B9B04D /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50E0C4E91CA3ECC500B9B04D /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4BE1CA3ECC500B9B04D /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50E0C4EA1CA3ECC500B9B04D /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0C4C01CA3ECC500B9B04D /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -88,7 +87,6 @@
 		50E0C4A81CA3ECC500B9B04D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		50E0C4B71CA3ECC500B9B04D /* MusicSongs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSongs.swift; sourceTree = "<group>"; };
 		50E0C4B81CA3ECC500B9B04D /* playMe-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "playMe-Bridging-Header.h"; sourceTree = "<group>"; };
-		50E0C4B91CA3ECC500B9B04D /* QuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
 		50E0C4BB1CA3ECC500B9B04D /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		50E0C4BC1CA3ECC500B9B04D /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		50E0C4BD1CA3ECC500B9B04D /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 				50E0C4CF1CA3ECC500B9B04D /* TouchViewController.swift */,
 				504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */,
 				50477DF41CE26CA60084BD2E /* EpworthSleepinessScaleViewController.swift */,
-				50E0C4B91CA3ECC500B9B04D /* QuizViewController.swift */,
 				50E0C4CE1CA3ECC500B9B04D /* TableViewController.swift */,
 				50E0C4D01CA3ECC500B9B04D /* ViewController.swift */,
 				50E0C4A31CA3ECC500B9B04D /* AudioPlayer.swift */,
@@ -408,7 +405,6 @@
 				50E0C4E81CA3ECC500B9B04D /* FMDatabase.m in Sources */,
 				50E0C4EA1CA3ECC500B9B04D /* FMDatabasePool.m in Sources */,
 				50E0C4EB1CA3ECC500B9B04D /* FMDatabaseQueue.m in Sources */,
-				50E0C4E71CA3ECC500B9B04D /* QuizViewController.swift in Sources */,
 				50E0C4E61CA3ECC500B9B04D /* MusicSongs.swift in Sources */,
 				50E0C4EC1CA3ECC500B9B04D /* FMResultSet.m in Sources */,
 				504B31E71CB6D30500CAD209 /* AppModel.swift in Sources */,

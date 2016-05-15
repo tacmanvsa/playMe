@@ -12,7 +12,6 @@ import Foundation
 class AppModel {
     
     private static var avgRt : Int = Int();
-    private static var quizIndex : Int = Int();
     private static var sssPoint : Int = Int();
     private static var epsPoint = [Int]();
     private static var penalization : Int = 0;
@@ -23,15 +22,6 @@ class AppModel {
     
     internal func setAvgRt(avg : Int) {
         AppModel.avgRt = avg;
-    }
-    
-    internal func getQuizIndex() -> Int {
-        return AppModel.quizIndex;
-    }
-    
-    internal func setQuizIndex(avg : Int) {
-        print("setQuiz", avg);
-        AppModel.quizIndex = avg;
     }
     
     internal func getSSSIntex() ->  Int {
