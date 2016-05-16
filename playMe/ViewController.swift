@@ -18,38 +18,24 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     private static var state : Int?;
     private static var player : AVAudioPlayer?;
-    //    private static var songsUrl = [MusicSongs]();
     private static var songsUrlELow = [MusicSongs]();
     private static var songsUrlLow = [MusicSongs]();
     private static var songsUrlMid = [MusicSongs]();
     private static var songsUrlHigh = [MusicSongs]();
-    
     private static let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
     private static let context:NSManagedObjectContext = ViewController.appDelegate.managedObjectContext;
     
     // BPM counter
     private static let detector : BPMDetector = BPMDetector.init();
-    
-    var avgPulseMin = [Int]();
+
     var pulse = [Int]();
-    var firstAvg : Bool = true;
+//    var firstAvg : Bool = true;
     
     var bleHandler : BLEHandler?;
+    var appModel : AppModel = AppModel();
     
     var index = 0;
-    
 
-    
-    
-    
-    /*
-    
-    *** All music songs on the used iPhone ***
-    
-    */
-    
-    
-    
     
     /*
     
@@ -96,42 +82,20 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     
-    @IBAction func playAndPauseMusic(sender: AnyObject) {
-        let request = NSFetchRequest(entityName: "Songs");
-        request.returnsObjectsAsFaults = false;
-        
-        do {
-            let results:NSArray = try ViewController.context.executeFetchRequest(request);
-            if(results.count > 0) {
-                print("kolko", results.count);
-                for res in results {
-                    print(res);
-                }
-            }
-            
-        } catch {
-            print("RESULT ERROR");
-        }
-        
+    @IBAction func playAndPauseMusic(sender: AnyObject) {        
         if( ViewController.player!.playing ) {
             ViewController.player!.delegate = self;
             ViewController.player!.pause();
             
             imageControls.image = UIImage(named: "play");
             
-//            getInformation();
         } else {
             ViewController.player!.delegate = self;
             ViewController.player!.play();
-//            songLabel.text = getInformation();
             
             imageControls.image = UIImage(named: "pause");
         }
     }
-    
-    
-    
-    
     
     
     /*
@@ -152,14 +116,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     // The view loads
     override func viewDidLoad() {
         super.viewDidLoad();
-    
-        firstAvg = true;
+        appModel.calculatePenalization();
         
         // hide controls until first play
         imageControls.hidden = true;
         forwardImage.hidden = true;
         rewindImage.hidden = true;
-//        ViewController.player = AudioPlayer.getAudioPlayer();
         
         // define control events
         
@@ -186,37 +148,28 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         navigationTitle.title = BLEHandler.choosenDevice as? String;
         bleHandler?.connectToPeripheral();
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.computeAvgBpm(_:)), name: "bpm", object: nil);
+
+        ViewController.player = AudioPlayer.getAudioPlayer();
         
-//        if((ViewController.player?.playing) != nil) {
-        if(ViewController.player != nil) {
-            print("YES ITS PLAYING");
-        } else {
-            ViewController.player = AudioPlayer.getAudioPlayer();
-//            ViewController.player
-            var avItems = [AVPlayerItem]();
+        if(appModel.getFirstAvg()) {
+        let resourcePath : NSString = NSBundle.mainBundle().resourcePath!
+        let documentsPath : NSString = resourcePath.stringByAppendingPathComponent("Music");
         
-            let resourcePath : NSString = NSBundle.mainBundle().resourcePath!
-            let documentsPath : NSString = resourcePath.stringByAppendingPathComponent("Music");
-        
-            let fm = NSFileManager.defaultManager()
-            do {
-                let items = try fm.contentsOfDirectoryAtPath(documentsPath as String)
-                for item in items {
+        let fm = NSFileManager.defaultManager()
+        do {
+        let items = try fm.contentsOfDirectoryAtPath(documentsPath as String)
+            for item in items {
                 
-                    var itemArr = item.componentsSeparatedByString(".");
+                var itemArr = item.componentsSeparatedByString(".");
                 
-                    let path : NSURL = NSBundle.mainBundle().URLForResource("Music/\(itemArr[0])", withExtension: itemArr[1])!;
+                let path : NSURL = NSBundle.mainBundle().URLForResource("Music/\(itemArr[0])", withExtension: itemArr[1])!;
                 
-                    avItems.append(AVPlayerItem.init(URL: path));
-                    
-                    insertSongIfNotExists(itemArr[0], path: path);
+                insertSongIfNotExists(itemArr[0], path: path);
                 }
-            } catch {
+        } catch {
                 // failed to read directory – bad permissions, perhaps?
-            }
-        
         }
-//        deleteSongs();
+        }
         super.viewDidLoad()
     }
     
@@ -249,7 +202,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             print("playing ", playing);
             if(playing || type == "") {
                 ViewController.player!.play();
-//                songLabel.text = getInformation();
             };
             //ViewController.player?.peakPowerForChannel(<#T##channelNumber: Int##Int#>)
         } catch {
@@ -282,12 +234,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             heartRateLabel.text = "\(strBpm)";
         }
         
-        if(firstAvg) {
+        if(appModel.getFirstAvg()) {
             if(pulse.count  >= 5) {
                 let pulseArray = pulse;
                 pulse.removeAll();
                 calcAvgPulse(pulseArray);
-                firstAvg = false;
+                appModel.setFirstAvg(false);
             }
         } else {
             if(pulse.count  >= 240) {
@@ -298,9 +250,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }
         
         pulse.append(bpm!);
-        
-//        print("pulse count", pulse.count);
-//        print("notification", bpm);
     }
     
     
@@ -315,24 +264,24 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             sum += pulseArray[i];
         }
         print("sum ", sum);
+        print("penalization");
         print("avg ", sum/pulseArray.count);
-//        avgPulseMin.append(sum/pulseArray.count);
-        let avg : Int = sum/pulseArray.count
+        let avg : Int = sum/pulseArray.count - appModel.getPenalization();
         
-        if(avg < 60) {
-            ViewController.state = 0;
-        } else if(avg >= 60 && avg < 90) {
-            ViewController.state = 1;
-        } else if(avg >= 90 && avg < 130) {
-            ViewController.state = 2;
-        } else if(avg >= 130) {
+        if(avg < 70) {
             ViewController.state = 3;
+        } else if(avg >= 70 && avg < 100) {
+            ViewController.state = 2;
+        } else if(avg >= 100 && avg < 140) {
+            ViewController.state = 1;
+        } else if(avg >= 140) {
+            ViewController.state = 0;
         }
         
         print( "\n AVG : ", avg);
         print( "\n VIEWCONTROLLER STATE : ", ViewController.state, "\n" );
         
-        if(firstAvg) {
+        if(appModel.getFirstAvg()) {
             playMusicByIndex("", playing: false);
             imageControls.hidden = false;
             forwardImage.hidden = false;
@@ -409,13 +358,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     
-    // If the nowplaying song is changed, this function is called, which updates the label
-    func nowPlayingItemChanged() {
-        print("changed");
-//        songLabel.text = (player.nowPlayingItem?.artist)! + ": " + (player.nowPlayingItem?.title)!;
-    }
-    
-    
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         playMusicByIndex("forward", playing: true);
     }
@@ -464,7 +406,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
-    // IDENTIFIKUJE NOVEHO, TREBA HO UZ LEN PRIDAT A VYRATAT BPM
     func insertSongIfNotExists(songName : String, path : NSURL) {
         var newSong : Bool = true;
         
@@ -480,29 +421,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                         newSong = false;
                         
                         categorizeMusic(songName, type: "mp3", bpm: res.valueForKey("bpm") as! Float);
-//                        var song : MusicSongs = MusicSongs(songUrl: songName, songType: "mp3", songBpm: res.valueForKey("bpm") as! Float);
-//                        
-//                        switch(song.category!) {
-//                            case "ELow" :
-//                                ViewController.songsUrlELow.append(song);
-//                                print("push this song EL", songName, res.valueForKey("bpm") as! Float);
-//                                break;
-//                            case "Low" :
-//                                ViewController.songsUrlLow.append(song);
-//                                print("push this song L", songName, res.valueForKey("bpm") as! Float);
-//                                break;
-//                            case "Mid":
-//                                ViewController.songsUrlMid.append(song);
-//                                print("push this song M", songName, res.valueForKey("bpm") as! Float);
-//                                break;
-//                            case "High":
-//                                ViewController.songsUrlHigh.append(song);
-//                                print("push this song H", songName, res.valueForKey("bpm") as! Float);
-//                                break;
-//                            default:
-//                                print("Error value!");
-//                                break;
-//                        }
                         
                         break;
                     }

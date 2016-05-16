@@ -26,11 +26,11 @@ class MusicSongs {
     
     func addCategory(bpm : Float) -> String {
     
-        if(bpm < 60) {
+        if(bpm < 70) {
             return "ELow";
-        } else if(bpm >= 60 && bpm < 90) {
+        } else if(bpm >= 70 && bpm < 100) {
             return "Low";
-        } else if(bpm >= 90 && bpm < 130) {
+        } else if(bpm >= 100 && bpm < 140) {
             return "Mid";
         } else {
             return "High";

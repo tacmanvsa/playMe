@@ -43,6 +43,8 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
         
         buttonTxt.layer.cornerRadius = 5;
+        textArea.editable = false;
+        textArea.userInteractionEnabled = false;
         
         textArea.text = IntroViewController.text[pageCtrl.currentPage].text;
         textHeader.text = IntroViewController.text[pageCtrl.currentPage].header;

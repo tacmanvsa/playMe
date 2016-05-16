@@ -13,6 +13,9 @@ class EpworthSleepinessScaleViewController: UIViewController, UITableViewDelegat
     @IBOutlet var situationLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     
+    // Data model
+    var appModel : AppModel = AppModel();
+    
     var situations = ["Sedenie a čítanie", "Pozeranie televízora", "Sedenie neaktívne na verejnosti(napr. divadlo alebo stretnutie)", "Cestovanie v aute ako pasažier hodinu bez prestávky", "Ľahnúť  si oddychovať poobede, keď  to okolnosti dovolia", "Sedenie a vedenie rozhovoru s niekýmm", "Sedenie poobede bez alkoholu", "Sedenie v zastavenom aute na pár minút kvôli premávke"];
     
     var options = ["0 - nulová", "1 - malá", "2 - mierna", "3 - veľká"];
@@ -65,6 +68,7 @@ class EpworthSleepinessScaleViewController: UIViewController, UITableViewDelegat
             let navController = UINavigationController(rootViewController: vc)
             self.presentViewController(navController, animated: true, completion: nil);
         } else {
+            appModel.pushESSIndex(indexPath.row);
             index += 1;
         }
     }

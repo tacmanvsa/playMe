@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		502A7F6A1CEA247700CE6034 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502A7F691CEA247700CE6034 /* AppModel.swift */; };
 		50477DF51CE26CA60084BD2E /* EpworthSleepinessScaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50477DF41CE26CA60084BD2E /* EpworthSleepinessScaleViewController.swift */; };
-		504B31E71CB6D30500CAD209 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B31E61CB6D30500CAD209 /* AppModel.swift */; };
 		504C8FFC1CE10C5800EFDA73 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504C8FFB1CE10C5800EFDA73 /* Launch Screen.storyboard */; };
 		504C8FFE1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */; };
 		507013881CA53DD60037B8D4 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 507013871CA53DD60037B8D4 /* BPMDetector.mm */; };
@@ -60,8 +60,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		502A7F691CEA247700CE6034 /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		50477DF41CE26CA60084BD2E /* EpworthSleepinessScaleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpworthSleepinessScaleViewController.swift; sourceTree = "<group>"; };
-		504B31E61CB6D30500CAD209 /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../AppModel.swift; sourceTree = "<group>"; };
 		504C8FFB1CE10C5800EFDA73 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StanfordSleepinessScaleViewController.swift; sourceTree = "<group>"; };
 		507013861CA53DD60037B8D4 /* BPMDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMDetector.h; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 				50E0C4BA1CA3ECC500B9B04D /* SqLite */,
 				50E0C4A11CA3ECC500B9B04D /* AppDelegate.swift */,
 				50B903AE1CC1520E005336A5 /* Playme.xcdatamodeld */,
-				504B31E61CB6D30500CAD209 /* AppModel.swift */,
+				502A7F691CEA247700CE6034 /* AppModel.swift */,
 				5070138D1CA5A3410037B8D4 /* IntroViewController.swift */,
 				50E0C4CF1CA3ECC500B9B04D /* TouchViewController.swift */,
 				504C8FFD1CE123DF00EFDA73 /* StanfordSleepinessScaleViewController.swift */,
@@ -397,6 +397,7 @@
 				50477DF51CE26CA60084BD2E /* EpworthSleepinessScaleViewController.swift in Sources */,
 				50E0C4EF1CA3ECC500B9B04D /* TableViewController.swift in Sources */,
 				50B903B01CC1520E005336A5 /* Playme.xcdatamodeld in Sources */,
+				502A7F6A1CEA247700CE6034 /* AppModel.swift in Sources */,
 				50E0C4D11CA3ECC500B9B04D /* AppDelegate.swift in Sources */,
 				50E0C4D41CA3ECC500B9B04D /* BLEHandler.swift in Sources */,
 				50E0C4F01CA3ECC500B9B04D /* TouchViewController.swift in Sources */,
@@ -407,7 +408,6 @@
 				50E0C4EB1CA3ECC500B9B04D /* FMDatabaseQueue.m in Sources */,
 				50E0C4E61CA3ECC500B9B04D /* MusicSongs.swift in Sources */,
 				50E0C4EC1CA3ECC500B9B04D /* FMResultSet.m in Sources */,
-				504B31E71CB6D30500CAD209 /* AppModel.swift in Sources */,
 				50E0C4D31CA3ECC500B9B04D /* AudioPlayer.swift in Sources */,
 				50E0C4F11CA3ECC500B9B04D /* ViewController.swift in Sources */,
 				50E0C4E91CA3ECC500B9B04D /* FMDatabaseAdditions.m in Sources */,

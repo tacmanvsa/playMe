@@ -34,8 +34,8 @@ class TouchViewController: UIViewController {
     var prepared : Bool = false; // control headings and background color
     var loopCnt : Int = 0; // counting the number of loops
     var waitingForGreen : Bool = false; // Check if the user touched the screen before green screen
-    var triesStr = String("Pokusy | 0 of 5");
-    var avgStr = String("Primer | 0ms");
+    var triesStr = String("Pokusy | 0 z 5");
+    var avgStr = String("Priemer | 0ms");
     var sum : Double = 0;
     var avg : Double = 0;
     
@@ -69,7 +69,6 @@ class TouchViewController: UIViewController {
         
         if(loopCnt < 5) {
             if(self.prepared) {
-                loopCnt += 1;
                 self.time = 0; // if the user hits the button before green, then set timer to null of
                                // and don't count it to average 
                 waitingForGreen = true;
@@ -109,20 +108,12 @@ class TouchViewController: UIViewController {
                 triesStr = "Pokusy | " + String(loopCnt) + " z 5";
                 triesLabel.text = triesStr;
             }
-        } else { // after 5 tests, we can go to the next view
-            self.view.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
-            triesStr = "Pokusy | 5 z 5";
-            triesLabel.text = triesStr;
-            self.timerLabel.text = NSString(format: "%1.0f ms", self.time*1000) as String;
-            
-            appModel.setAvgRt(Int(avg));
-            nextButton.hidden = false;
         }
     }
     
     // function returning random number between 2 and 6
     func grabRandomTime() -> Int{
-        let time = Int(arc4random_uniform(UInt32(6)+3));
+        let time = Int(arc4random_uniform(6)+3);
         return time;
     }
     
@@ -145,11 +136,25 @@ class TouchViewController: UIViewController {
     func countAverage() -> String {
         if(timeArray.last != 0.0) {
             sum += timeArray.last!;
-            
+            print("plus ", timeArray.last);
+            loopCnt += 1;
             avg = (sum/Double(loopCnt))*1000;
+            
+            if( loopCnt >= 5 ) {
+                self.view.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
+                timeArray.append(self.time); // append the time to array
+                avgStr = "Priemer | " + countAverage();
+                avgLabel.text = avgStr;
+                triesStr = "Pokusy | 5 z 5";
+                triesLabel.text = triesStr;
+                
+                appModel.setAvgRt(Int(avg));
+                nextButton.hidden = false;
+            }
+            
             return NSString(format: "%1.0fms", avg) as String;
         } else {
-            loopCnt -= 1;
+            print("index  -1");
             return NSString(format: "%1.0fms", avg) as String;
         }
     }
