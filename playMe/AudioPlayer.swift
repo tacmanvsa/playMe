@@ -11,15 +11,19 @@ import AVFoundation
 
 class AudioPlayer {
 
-    private static var player : AVAudioPlayer?;
+    private static var player : AVAudioPlayer = AVAudioPlayer();
     
     
-    internal static func getAudioPlayer() -> AVAudioPlayer {
-        if(player == nil) {
-            player = AVAudioPlayer();
-        }
-        
-        return player!;
+    internal func getAudioPlayer() -> AVAudioPlayer {
+//        if(AudioPlayer.player == nil) {
+//            AudioPlayer.player = AVAudioPlayer();
+//        }
+        print("is playing", AudioPlayer.player.playing);
+        return AudioPlayer.player;
+    }
+    
+    internal func setAudioPlayer(p : AVAudioPlayer) {
+        AudioPlayer.player = p;
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 // Class created to manage global variables
 class AppModel {
@@ -16,6 +17,84 @@ class AppModel {
     private static var epsPoint = [Int]();
     private static var penalization : Int = 0;
     private static var firstAvg : Bool = true;
+    private static var userState : Int = -1;
+    
+    private static var songsUrlELow = [MusicSongs]();
+    private static var songsUrlLow = [MusicSongs]();
+    private static var songsUrlMid = [MusicSongs]();
+    private static var songsUrlHigh = [MusicSongs]();
+    private static var songIndex : Int = 0;
+//    private static var player = AudioPlayer.getAudioPlayer();
+    
+    
+    // Get audio player
+    
+//    internal func getPlayer() -> AVAudioPlayer {
+//        return AppModel.player;
+//    }
+    
+    //  ELow
+    internal func addSongELow(song: MusicSongs) {
+        AppModel.songsUrlELow.append(song);
+    }
+    
+    internal func getSongELowByIndex(index: Int) -> MusicSongs {
+        return AppModel.songsUrlELow[index];
+    }
+    
+    internal func getSongELowSize() -> Int {
+        return AppModel.songsUrlELow.count;
+    }
+    
+    //  Low
+    internal func addSongLow(song: MusicSongs) {
+        AppModel.songsUrlLow.append(song);
+    }
+    
+    internal func getSongLowByIndex(index: Int) -> MusicSongs {
+        return AppModel.songsUrlLow[index];
+    }
+    
+    internal func getSongLowSize() -> Int {
+        return AppModel.songsUrlLow.count;
+    }
+    
+    //  Mid
+    internal func addSongMid(song: MusicSongs) {
+        AppModel.songsUrlMid.append(song);
+    }
+    
+    internal func getSongMidByIndex(index: Int) -> MusicSongs {
+        return AppModel.songsUrlMid[index];
+    }
+    
+    internal func getSongMidSize() -> Int {
+        return AppModel.songsUrlMid.count;
+    }
+    
+    //  High
+    internal func addSongHigh(song: MusicSongs) {
+        AppModel.songsUrlHigh.append(song);
+    }
+    
+    internal func getSongHighByIndex(index: Int) -> MusicSongs {
+        return AppModel.songsUrlHigh[index];
+    }
+    
+    internal func getSongHighSize() -> Int {
+        return AppModel.songsUrlHigh.count;
+    }
+    
+    
+    // Getters - Setters
+    
+    internal func getSongIndex() -> Int {
+        return AppModel.songIndex;
+    }
+    
+    internal func setSongIndex(index: Int) {
+        AppModel.songIndex = index;
+    }
     
     internal func getFirstAvg() -> Bool {
         return AppModel.firstAvg;
@@ -23,6 +102,14 @@ class AppModel {
     
     internal func setFirstAvg(bool: Bool) {
         AppModel.firstAvg = bool;
+    }
+        
+    internal func getUserState() -> Int {
+        return AppModel.userState;
+    }
+    
+    internal func setUserState(state: Int) {
+        AppModel.userState = state;
     }
     
     internal func getAvgRt() -> Int {
@@ -54,6 +141,8 @@ class AppModel {
         }
         return points;
     }
+    
+    // Penalization
     
     internal func calculatePenalization() {
         if(AppModel.avgRt >= 400) {
