@@ -8,9 +8,13 @@
 
 import UIKit
 
+/*
+                ** Class for creating custom cells in TableViews **
+*/
+
 class CustomCell: UITableViewCell {
 
-    // Ten image, ktory tam bol nesedi
+    // It has only label now
     // @IBOutlet var imageDevice: UIImageView!
     @IBOutlet var labelDevice: UILabel!
 

@@ -11,16 +11,13 @@ import AVFoundation
 import MediaPlayer
 import CoreData
 
-// Dorob funkciu na pocitanie primeru
-// Najprv zober priemer 5 sekund, potom minutu
-
 class ViewController: UIViewController, AVAudioPlayerDelegate {
     
-    private static var state : Int?;
-//    private static var songsUrlELow = [MusicSongs]();
-//    private static var songsUrlLow = [MusicSongs]();
-//    private static var songsUrlMid = [MusicSongs]();
-//    private static var songsUrlHigh = [MusicSongs]();
+    /*
+                        ** Variables **
+    */
+    
+    // Core Model variables
     private static let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate);
     private static let context:NSManagedObjectContext = ViewController.appDelegate.managedObjectContext;
     
@@ -28,18 +25,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     private static let detector : BPMDetector = BPMDetector.init();
 
     var pulse = [Int]();
-//    var firstAvg : Bool = true;
-    
     var bleHandler : BLEHandler?;
     var appModel : AppModel = AppModel();
     var player : AudioPlayer = AudioPlayer();
-    
-//    var index = 0;
 
     
     /*
     
-    *** Outlets ***
+                        *** Outlets ***
     
     */
     
@@ -53,17 +46,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet var rewindImage: UIImageView!
     @IBOutlet var loadingLabel: UILabel!
     @IBOutlet var backButton: UIBarButtonItem!
+    @IBOutlet var progressBar: UISlider!
+    @IBOutlet var timerLabel: UILabel!
     
     /*
     
-    *** Music player actions ***
+                    *** Music player actions ***
     
     */
-  
-    @IBAction func backButtonClick(sender: AnyObject) {
-        print("back button clicked");
-    }
-    
     
     @IBAction func rewindMusic(sender: AnyObject) {
         if(player.getAudioPlayer().playing) {
@@ -101,27 +91,29 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     /*
     
-    *** Segue varuable for view title ***
+                    *** Segue varuable for view title ***
     
     */
     
-    // Segue variable
     var controllerTitle = "";
  
     /*
     
-    *** Default "view did load" functions ***
+                    *** Default "view did load" functions ***
     
     */
     
     // The view loads
     override func viewDidLoad() {
         super.viewDidLoad();
+        
+        // calculate penalization
         appModel.calculatePenalization();
         
         loadingLabel.hidden = true;
+        progressBar.userInteractionEnabled = false;
         
-        // define control events
+        // define control events on player images
         
         // play image
         let imageView = imageControls;
@@ -141,15 +133,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         imageView3.userInteractionEnabled = true;
         imageView3.addGestureRecognizer(tapGestureRecognizer3);
         
-        bleHandler = BLEHandler();
         
+        // Connecting to peripheral, capture the notification with actual heart rate data and call a function to deal with it
+        bleHandler = BLEHandler();
         navigationTitle.title = BLEHandler.choosenDevice as? String;
         bleHandler?.connectToPeripheral();
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.computeAvgBpm(_:)), name: "bpm", object: nil);
 
-//        ViewController.player = AudioPlayer.getAudioPlayer();
-        
-        print("first AVG", appModel.getFirstAvg());
+        // if it's the first heart rate analysis, then load all songs
         if(appModel.getFirstAvg()) {
             loadingLabel.hidden = false;
             
@@ -158,6 +149,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             forwardImage.hidden = true;
             rewindImage.hidden = true;
             backButton.enabled = false;
+            progressBar.hidden = true;
             
             let resourcePath : NSString = NSBundle.mainBundle().resourcePath!
             let documentsPath : NSString = resourcePath.stringByAppendingPathComponent("Music");
@@ -178,6 +170,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             }
         } else {
             songLabel.text = returnSongNameOfActualItem();
+            
+            let displayLink = CADisplayLink(target: self, selector: (#selector(ViewController.updateSliderProgress)))
+            displayLink.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         }
         super.viewDidLoad()
     }
@@ -191,7 +186,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     /*
     
-    *** Functions ***
+                        *** Functions ***
     
     */
     
@@ -209,7 +204,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 appModel.setSongIndex(returnSongsArrayCount(appModel.getUserState()) - 1);
             }
             else {
-//                index -= 1;
                 appModel.setSongIndex(appModel.getSongIndex() - 1);
             }
         }
@@ -217,37 +211,51 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         do {
             try player.setAudioPlayer(AVAudioPlayer(contentsOfURL: returnUrlOfActualItem(appModel.getSongIndex())));
             player.getAudioPlayer().delegate = self;
-            print("playing ", playing);
             if(playing || type == "") {
                 player.getAudioPlayer().play();
+                
+                let displayLink = CADisplayLink(target: self, selector: (#selector(ViewController.updateSliderProgress)))
+                displayLink.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
             };
-            //ViewController.player?.peakPowerForChannel(<#T##channelNumber: Int##Int#>)
         } catch {
             print("Audio player nefunguje");
         }
     }
     
-    // return the count of song array - input: type
+    // updating song progress bar
+    func updateSliderProgress() {
+        let progress = player.getAudioPlayer().currentTime / player.getAudioPlayer().duration;
+        timerLabel.text = updateTime(player.getAudioPlayer().currentTime);
+        progressBar.setValue(Float(progress), animated: false);
+    }
+    
+    // update time and return it's value in m:ss format
+    func updateTime(time: NSTimeInterval) -> String {
+        let current: Int = Int(time)
+        let minutes = current / 60
+        let seconds = abs(current) % 60
+        let minutesString = "\(minutes)"
+        let secondsString = String(format: "%02d", arguments: [seconds])
+        
+        return minutesString + ":" + secondsString
+    }
+    
+    // return the count of song array by user state - input: type
     func returnSongsArrayCount(type : Int) -> Int {
         switch(type) {
         case 0:
-//            return ViewController.songsUrlELow.count;
             return appModel.getSongELowSize();
         case 1:
-//            return ViewController.songsUrlLow.count;
             return appModel.getSongLowSize();
         case 2:
-//            return ViewController.songsUrlMid.count;
             return appModel.getSongMidSize();
         case 3:
-//            return ViewController.songsUrlHigh.count;
             return appModel.getSongHighSize();
         default:
             return 0;
         }
     }
     
-    // Notifications of current bpm
     func computeAvgBpm(notifications: NSNotification) {
         let userInfo:Dictionary<String,Int!> = notifications.userInfo as! Dictionary<String,Int!>;
         let bpm = userInfo["data"];
@@ -285,29 +293,20 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         for i in 0 ..< pulseArray.count {
             sum += pulseArray[i];
         }
-        print("sum ", sum);
-        print("penalization");
-        print("avg ", sum/pulseArray.count);
+        
         let avg : Int = sum/pulseArray.count - appModel.getPenalization();
         
-        
         if(avg < 70) {
-//            ViewController.state = 3;
             appModel.setUserState(3);
         } else if(avg >= 70 && avg < 100) {
-//            ViewController.state = 2;
             appModel.setUserState(2)
         } else if(avg >= 100 && avg < 140) {
-//            ViewController.state = 1;
             appModel.setUserState(1);
         } else if(avg >= 140) {
-//            ViewController.state = 0;
             appModel.setUserState(0);
         }
         
-        print( "\n AVG : ", avg);
-        print( "\n VIEWCONTROLLER STATE : ", appModel.getUserState(), "\n" );
-        
+        // if it's the first analysis play music
         if(appModel.getFirstAvg()) {
             playMusicByIndex("", playing: false);
             imageControls.hidden = false;
@@ -315,6 +314,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             rewindImage.hidden = false;
             loadingLabel.hidden = true;
             backButton.enabled = true;
+            progressBar.hidden = false;
             
             appModel.setFirstAvg(false);
         }
@@ -335,14 +335,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
     }
     
-    
-    // Is the queeplayer playing
-    func isPlaying() -> Bool {
-        return player.getAudioPlayer().rate > 0;
-    }
-    
-    
-    // Return actual song name 
+    // Returns the actual song name
     func returnSongNameOfActualItem() -> String {
         var songName : String?;
         switch(appModel.getUserState()) {
@@ -371,7 +364,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     func returnUrlOfActualItem(index: Int) -> NSURL {
         var url : NSURL?;
         
-//        switch(ViewController.state!) {
         switch(appModel.getUserState()) {
         case 0:
             let song = appModel.getSongELowByIndex(appModel.getSongIndex());
@@ -399,7 +391,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 
         }
         
-//        print(url);
         return url!;
     }
     
@@ -423,10 +414,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
 
     
-    /*
-                *** CORE DATA FUNKCTIONS ***
-    */
-    
+    // Core data function to delete all records from entity Songs
     func deleteSongs() {
         let coord = ViewController.appDelegate.persistentStoreCoordinator;
         
@@ -440,36 +428,29 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
+    // create arrays of songs ("playlists") depending on the song category
     func categorizeMusic(url: String, type: String, bpm: Float) {
-        var song : MusicSongs = MusicSongs(songUrl: url, songType: type, songBpm: bpm);
+        let song : MusicSongs = MusicSongs(songUrl: url, songType: type, songBpm: bpm);
         
         switch(song.category!) {
             case "ELow" :
-//                ViewController.songsUrlELow.append(song);
                 appModel.addSongELow(song);
-                print("push this song EL", url, bpm);
                 break;
             case "Low" :
-//                ViewController.songsUrlLow.append(song);
                 appModel.addSongLow(song);
-                print("push this song L", url, bpm);
                 break;
             case "Mid":
-//                ViewController.songsUrlMid.append(song);
                 appModel.addSongMid(song);
-                print("push this song M", url, bpm);
                 break;
             case "High":
-//                ViewController.songsUrlHigh.append(song);
                 appModel.addSongHigh(song);
-                print("push this song H", url, bpm);
                 break;
             default:
-                print("Error value!");
                 break;
         }
     }
     
+    // function adds new songs to database
     func insertSongIfNotExists(songName : String, path : NSURL) {
         var newSong : Bool = true;
         
@@ -478,7 +459,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         do {
             let results:NSArray = try ViewController.context.executeFetchRequest(request);
-            print("kolko", results.count);
             if(results.count > 0) {
                 for res in results {
                     if( songName == res.valueForKey("song_name") as! String ) {
@@ -496,8 +476,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         }
         
         if(newSong) {
-            print("ano nerovnaju sa", songName);
-            var newSongBpm = ViewController.detector.getBPM(path);
+            let newSongBpm = ViewController.detector.getBPM(path);
             
             let newSong = NSEntityDescription.insertNewObjectForEntityForName("Songs", inManagedObjectContext: ViewController.context) as NSManagedObject;
             

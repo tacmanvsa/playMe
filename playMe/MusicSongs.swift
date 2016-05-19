@@ -19,9 +19,6 @@ class MusicSongs {
         self.songType = songType;
         self.songBpm = songBpm;
         self.category = addCategory(self.songBpm);
-        
-        print("songBpm", songBpm);
-        print("category", self.category);
     }
     
     func addCategory(bpm : Float) -> String {

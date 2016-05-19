@@ -8,6 +8,10 @@
 
 import UIKit
 
+/*
+            ** Structure for intro pages **
+*/
+
 struct pages {
     var header : String
     var text : String
@@ -17,6 +21,7 @@ struct pages {
 
 class IntroViewController: UIViewController {
     
+    // text variable for each "test" subview with intro and small explanation
     private static var text = [
         pages(header: "Test reakčných\nschopností", text: "Otestuj svoje reakcie, aby sme ti mohli zabezpečiť ešte lepšie šoférovanie!", buttonText: "Poďme na to!"),
         pages(header: "Test ospalosti", text: "Prezraď nám viac o tvojej ospalosti a zabezpečíme Ti bezpečnú jazdu!", buttonText: "Do toho!"),

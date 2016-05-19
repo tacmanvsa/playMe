@@ -9,16 +9,13 @@
 import Foundation
 import AVFoundation
 
+// Class manages the player variable and don't allow to create more then 1 in the application
 class AudioPlayer {
 
     private static var player : AVAudioPlayer = AVAudioPlayer();
     
     
     internal func getAudioPlayer() -> AVAudioPlayer {
-//        if(AudioPlayer.player == nil) {
-//            AudioPlayer.player = AVAudioPlayer();
-//        }
-        print("is playing", AudioPlayer.player.playing);
         return AudioPlayer.player;
     }
     

@@ -11,6 +11,7 @@ import CoreBluetooth
 
 class TableViewController: UITableViewController {
     
+    // variable of type BLEHandler, used to scan for peripherals to connect
     var bleHandler : BLEHandler?;
     
     override func viewDidLoad() {
@@ -21,9 +22,11 @@ class TableViewController: UITableViewController {
         self.tableView.backgroundColor = UIColor(red: 31, green: 33, blue: 36);
         
         bleHandler = BLEHandler();
+        
+        // scanning for peripherals
         bleHandler?.isCentralManagerOn();
         
-        // notifications when we found devices, these devices are then represented in the tableview
+        // capture notification sended, when device/s has been found
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TableViewController.refreshList(_:)), name:"refreshMyTableView", object: nil);
     }
     
@@ -34,7 +37,9 @@ class TableViewController: UITableViewController {
     
     var deviceName = "";
 
-    
+    /*
+                        ** UITableView functions **
+    */
 
     // MARK: - Table view data source
 
@@ -66,12 +71,12 @@ class TableViewController: UITableViewController {
         
         let bpmVc: ViewController = self.storyboard?.instantiateViewControllerWithIdentifier("BpmVc") as! ViewController;
         
-        print(deviceName);
         bpmVc.controllerTitle = deviceName;
      
         self.presentViewController(bpmVc, animated: true, completion: nil);
     }
     
+    // Reloading the tableview after the captured notification of new devices
     func refreshList(notification: NSNotification){
         tableView.reloadData();
     }

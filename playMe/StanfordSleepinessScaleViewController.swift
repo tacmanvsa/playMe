@@ -8,6 +8,10 @@
 
 import UIKit
 
+/*
+                ** Struct holding "Quiz" variables **
+*/
+
 struct Quiz {
     var question : String
     var point : Int
@@ -15,11 +19,13 @@ struct Quiz {
 
 class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // Outlets
     @IBOutlet var pickerView: UIPickerView!
     
     // Data model
     var appModel : AppModel = AppModel();
     
+    // Data for UIPickerView of type Quiz
     private var pickerData : [Quiz] = [];
     private var selected : Quiz?;
 
@@ -29,6 +35,7 @@ class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDeleg
         self.pickerView.delegate = self;
         self.pickerView.dataSource = self;
         
+        // Adding answers
         pickerData.append(Quiz(question: "Byť aktívny, vitálny, ostražitý, pohotový", point: 1));
         pickerData.append(Quiz(question: "Fungovať na vysokej úrovni ale nie na maxime, schopnosť koncentrovať sa", point: 2));
         pickerData.append(Quiz(question: "Byť pri vedomí, ale relaxovaný; strácanie bdelosti", point: 3));
@@ -48,7 +55,10 @@ class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDeleg
         // Dispose of any resources that can be recreated.
     }
     
-
+    /*
+                ** UIPickerView functions **
+    */
+    
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1;
     }
@@ -79,6 +89,7 @@ class StanfordSleepinessScaleViewController: UIViewController, UIPickerViewDeleg
         selected = pickerData[row];
     }
     
+    // Action, we are going to the next view and before that we save the sleepiness score to AppModel variable
     @IBAction func nextView(sender: AnyObject) {
         appModel.setSSSIndex((selected?.point)!);
     }

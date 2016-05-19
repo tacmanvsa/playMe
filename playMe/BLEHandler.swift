@@ -10,16 +10,17 @@ import Foundation
 import CoreBluetooth
 import UIKit
 
-
-// SPRAV SINGLETON - TREBA PRIVATE KONSTRUKTOR
 class BLEHandler : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
+    // Array of founded devices
     var nameOfDevices = Array<NSString>();
+    
+    // Choosen device by the user
     static var choosenDevice : NSString?;
-    private static var globalBpm : Int?;
     
     private let HeartRateService = CBUUID(string: "180D"); // UUID for the heart rate service devices
-    private let HeartRateMeasurement = CBUUID(string: "2A37"); // UUID for the data packeges from the heart rate
+    private let HeartRateMeasurement = CBUUID(string: "2A37"); // UUID for the data packeges from the 
+                                                               // heart rate device
     
     private static var centralManager : CBCentralManager!; // Used to manage the discovered sensors
     private static var mioLinkPeripheral : CBPeripheral! // Used to access the peripherals services
@@ -56,11 +57,8 @@ class BLEHandler : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
         let nameOfDevice = (advertisementData as NSDictionary).objectForKey(CBAdvertisementDataLocalNameKey) as? NSString;
-        print(nameOfDevice);
         if(( nameOfDevice ) != nil && BLEHandler.choosenDevice == nil) {
             if( !nameOfDevices.contains(nameOfDevice!)) {
-                print(nameOfDevice);
-                print("je nil?", BLEHandler.choosenDevice);
                 nameOfDevices.append(nameOfDevice!)
             }
             BLEHandler.centralManager.stopScan();
@@ -76,13 +74,10 @@ class BLEHandler : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // After discovering the peripheral device
     // In this function is called a method, which is looking for datas from the peripheral
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        print("Discovering peripheral services");
-        BLEHandler.mioLinkPeripheral.discoverServices(nil);
+    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {        BLEHandler.mioLinkPeripheral.discoverServices(nil);
     }
     
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-        print("Looking at peripheral services");
         for services in peripheral.services! {
             let thisService = services as CBService;
             if services.UUID == HeartRateService {
@@ -92,7 +87,6 @@ class BLEHandler : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
 
     func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
-        print("enabling sensors");
         
         var enableValue = 1;
         let enablyBytes = NSData(bytes: &enableValue, length: sizeof(UInt8));
